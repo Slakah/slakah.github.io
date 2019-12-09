@@ -23,6 +23,7 @@ jobs:
     - name: yarn publish website
       run: |
         cd website
+        yarn install
         GIT_USER="${{ secrets.GITHUB_TOKEN }}" yarn run publish-gh-pages
       env:
         CI: true
