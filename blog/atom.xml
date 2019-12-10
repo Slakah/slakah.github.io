@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://slakah.github.io/blog</id>
-    <title>Test Site Blog</title>
-    <updated>2017-10-24T06:00:00.000Z</updated>
+    <title>Gubbns Blog</title>
+    <updated>2019-12-09T06:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://slakah.github.io/blog"/>
-    <subtitle>The best place to stay up-to-date with the latest Test Site news and events.</subtitle>
-    <logo>https://slakah.github.io/img/favicon.ico</logo>
+    <subtitle>The best place to stay up-to-date with the latest Gubbns news and events.</subtitle>
+    <logo>https://slakah.github.io/img/favicon.svg</logo>
     <rights>Copyright © 2019 James Collier</rights>
     <entry>
-        <title type="html"><![CDATA[New Version 1.0.0]]></title>
-        <id>https://slakah.github.io/blog/2017/10/24/new-version-1.0.0.html</id>
-        <link href="https://slakah.github.io/blog/2017/10/24/new-version-1.0.0.html"/>
-        <updated>2017-10-24T06:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>This blog post will test file name parsing issues when periods are present.</p> ]]></summary>
+        <title type="html"><![CDATA[Hello World]]></title>
+        <id>https://slakah.github.io/blog/2019/12/09/hello-world.html</id>
+        <link href="https://slakah.github.io/blog/2019/12/09/hello-world.html"/>
+        <updated>2019-12-09T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>Hello world! Quick site created using <a href="https://docusaurus.io/">docusaurus</a> source can be seen <a href="https://github.com/Slakah/slakah.github.io">here</a>.</p> ]]></summary>
         <author>
-            <name>Eric Nakagawa</name>
+            <name>James Collier</name>
             <email/>
-            <uri>http://twitter.com/ericnakagawa</uri>
+            <uri>http://twitter.com/JRCCollier</uri>
         </author>
     </entry>
 </feed>

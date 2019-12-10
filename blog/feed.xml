@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
     <channel>
-        <title>Test Site Blog</title>
+        <title>Gubbns Blog</title>
         <link>https://slakah.github.io/blog</link>
-        <description>The best place to stay up-to-date with the latest Test Site news and events.</description>
-        <lastBuildDate>Tue, 24 Oct 2017 06:00:00 GMT</lastBuildDate>
+        <description>The best place to stay up-to-date with the latest Gubbns news and events.</description>
+        <lastBuildDate>Mon, 09 Dec 2019 06:00:00 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
-            <title>Test Site Blog</title>
-            <url>https://slakah.github.io/img/favicon.ico</url>
+            <title>Gubbns Blog</title>
+            <url>https://slakah.github.io/img/favicon.svg</url>
             <link>https://slakah.github.io/blog</link>
         </image>
         <copyright>Copyright © 2019 James Collier</copyright>
         <item>
-            <title><![CDATA[New Version 1.0.0]]></title>
-            <link>https://slakah.github.io/blog/2017/10/24/new-version-1.0.0.html</link>
-            <guid>https://slakah.github.io/blog/2017/10/24/new-version-1.0.0.html</guid>
-            <pubDate>Tue, 24 Oct 2017 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>This blog post will test file name parsing issues when periods are present.</p> ]]></description>
+            <title><![CDATA[Hello World]]></title>
+            <link>https://slakah.github.io/blog/2019/12/09/hello-world.html</link>
+            <guid>https://slakah.github.io/blog/2019/12/09/hello-world.html</guid>
+            <pubDate>Mon, 09 Dec 2019 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>Hello world! Quick site created using <a href="https://docusaurus.io/">docusaurus</a> source can be seen <a href="https://github.com/Slakah/slakah.github.io">here</a>.</p> ]]></description>
         </item>
     </channel>
 </rss>
