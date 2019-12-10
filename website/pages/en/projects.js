@@ -21,7 +21,7 @@ function Projects(props) {
           <header className="postHeader">
             <h1>Projects</h1>
           </header>
-          <p>Here are some of the projects I'm proud of:</p>
+          <p>Some of the projects I'm currently working on</p>
           <GridBlock contents={projectLinks} layout="threeColumn" />
         </div>
       </Container>
