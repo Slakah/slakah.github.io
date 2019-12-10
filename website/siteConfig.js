@@ -21,8 +21,9 @@ const users = [
 ];
 
 const siteConfig = {
-  title: 'Test Site', // Title for your website.
-  tagline: 'A website for testing',
+  title: 'Gubbns', // Title for your website.
+  tagline: 'Stuff to share',
+  twitterUsername: 'JRCCollier',
   url: 'https://slakah.github.io', // Your website URL
   baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
@@ -38,9 +39,7 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'doc1', label: 'Docs'},
-    {doc: 'doc4', label: 'API'},
-    {page: 'help', label: 'Help'},
+    // {doc: 'talks.md', label: 'Talks'},
     {blog: true, label: 'Blog'},
   ],
 
@@ -102,9 +101,7 @@ const siteConfig = {
   // Show documentation's last update time.
   // enableUpdateTime: true,
 
-  // You may provide arbitrary config keys to be used as needed by your
-  // template. For example, if you need your repo's URL...
-  //   repoUrl: 'https://github.com/facebook/test-site',
+  repoUrl: 'https://github.com/slakah/slakah.github.io',
 };
 
 module.exports = siteConfig;
