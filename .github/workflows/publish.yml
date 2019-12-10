@@ -21,10 +21,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: yarn publish website
+      env:
+        GITHUB_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
+        CI: true
       run: |
         git config --global user.email "slakah@users.noreply.github.com"
         git config --global user.name "slakah"
-        echo "machine github.com login slakah password ${{ secrets.GITHUB_TOKEN }}" > ~/.netrc
+        echo "machine github.com login slakah password $GITHUB_TOKEN" > ~/.netrc
         cd website && yarn install && GIT_USER='slakah' yarn run publish-gh-pages
-      env:
-        CI: true
