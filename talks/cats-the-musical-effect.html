@@ -349,7 +349,7 @@ def readFile(path: String): Resource[IO, BufferedSource] = Resource
 
 val readConfig = readFile("talks/test-conf.json").use(lines => IO(lines.mkString))
 // readConfig: IO[String] = Async(
-//   cats.effect.internals.IOBracket$$$Lambda$3102/1823076816@43c1dcb0,
+//   cats.effect.internals.IOBracket$$$Lambda$3084/278479354@1bdbf918,
 //   false
 // )
 readConfig.unsafeRunSync()
