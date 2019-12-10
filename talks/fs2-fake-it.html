@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FS2 - Fake it till you make it</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+      .inverse em {
+        color: #f3f3f3;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle, inverse
+
+# Fake it till you make it with FS2
+
+James Collier @JRCCollier
+
+![FS2 Logo](./assets/fs2-logo.png)
+
+---
+
+## Playback Session
+
+Telemetry events will be emitted from devices.
+
+```scala
+import java.time.Instant
+import java.util.UUID
+
+sealed trait PlaybackEvent {
+  def sessionId: UUID
+}
+final case class Started(timestamp: Instant, sessionId: UUID) extends PlaybackEvent
+final case class Paused(timestamp: Instant, sessionId: UUID) extends PlaybackEvent
+final case class Resumed(timestamp: Instant, sessionId: UUID) extends PlaybackEvent
+final case class Ended(timestamp: Instant, sessionId: UUID) extends PlaybackEvent
+```
+
+---
+
+## 1000ft view
+
+![device to cloud](./assets/device-to-cloud.png)
+
+---
+class: inverse
+
+## The catch
+
+😱 it's going to be a while till devices are instrumented!
+
+--
+
+The show must go on!
+
+--
+
+Need to develop while application teams are instrumenting.
+
+---
+
+## Fake it till we instrument it
+
+We have the ~~technology~~ schema, we can build the events.
+
+--
+
+![gen to cloud](./assets/gen-to-cloud.png)
+
+---
+
+## Let's just use scalacheck!
+
+```scala
+import org.scalacheck.ScalacheckShapeless._
+import org.scalacheck.{Arbitrary, Gen}
+
+private implicit val arbInstant: Arbitrary[Instant] =
+    Arbitrary(Gen.calendar.map(_.toInstant))
+val arbPlaybackEvt = implicitly[Arbitrary[PlaybackEvent]]
+```
+
+Now let's generate some events...
+
+--
+
+```scala
+List.fill(10)(arbPlaybackEvt.arbitrary.sample).flatten
+// res0: List[PlaybackEvent] = List(
+//   Resumed(4000-11-03T23:59:59.059Z, ba96726f-67f6-4f7a-b821-e6d299330fc8),
+//   Resumed(1215-02-08T09:15:30.178Z, e0d09042-2f9b-4497-a01c-e9929a52c4e5),
+//   Paused(1970-01-01T00:00:00.001Z, fa7fd206-af5d-4cfb-b97f-98d7ea57559a),
+//   Started(1818-02-25T20:29:28.843Z, a685d45d-aba4-4322-8e36-db81f55be3f6),
+//   Ended(2112-09-04T22:39:24.949Z, 5b1c9c6e-54ad-41a5-9fcc-31c26f0d7e05),
+//   Paused(3766-12-10T03:17:59.791Z, b6225f4f-c5f7-4834-b3cc-d343dd0268af),
+//   Resumed(2946-04-01T08:41:11.022Z, f8fb65bf-a4b8-4363-a392-8656ef221812),
+//   Resumed(0004-10-12T03:53:47.620Z, 56088104-7fdb-4071-8409-55af51be63d3),
+//   Ended(+292269054-12-31T00:00:00.001Z, 52a375b6-5395-4396-a9b2-df608400b0f9),
+//   Started(1970-01-01T00:00:00.001Z, d1c2e3a9-0285-48d7-bd23-559784db8577)
+// )
+```
+
+😱 not useful!
+
+???
+
+* timestamp is nonsense.
+* each event has it's own session.
+* not a representative lifecycle.
+
+---
+
+## Requirements
+
+* Sessions modelled.
+* Representative delays between events.
+* Configure the number of concurrent sessions.
+
+--
+
+Maybe this can be modelled as streams?
+
+--
+
+Step in FS2:
+
+![FS2 Logo](./assets/fs2-logo.png)
+
+```scala
+import cats.effect._
+import fs2.Stream
+import scala.concurrent.ExecutionContext
+import scala.concurrent.duration._
+```
+
+
+---
+
+## Model a playback scenario
+
+```scala
+def session: Stream[IO, PlaybackEvent] = for {
+  now <- Stream.emit(Instant.parse("2019-11-26T12:00:00Z"))
+  sessionId <- Stream.eval(IO(UUID.randomUUID()))
+  s <- Stream.emits(List(
+    Started(now, sessionId),
+    Ended(now.plusSeconds(60), sessionId)
+  ))
+} yield s
+```
+
+--
+
+```scala
+session.compile.toList.unsafeRunSync()
+// res2: List[PlaybackEvent] = List(
+//   Started(2019-11-26T12:00:00Z, 48ba1349-057f-4fa0-86b8-ce850af3d5fd),
+//   Ended(2019-11-26T12:01:00Z, 48ba1349-057f-4fa0-86b8-ce850af3d5fd)
+// )
+```
+
+---
+
+## Nap between events 💤💤💤
+
+Useful to model the progress of time between emitting
+events for a session.
+
+--
+
+```scala
+def nowS: Stream[IO, Instant] =
+  Stream.eval(timer.clock.realTime(MILLISECONDS).map(Instant.ofEpochMilli))
+
+def idealSession: Stream[IO, PlaybackEvent] = for {
+  sessionId <- Stream.eval(IO(UUID.randomUUID()))
+  s <- nowS.map(Started(_, sessionId)) ++
+    nowS.map(Ended(_, sessionId)).delayBy(30.minutes)
+} yield s
+```
+
+--
+
+```scala
+idealSession
+  .evalMap(event => IO(println(event)))
+  .compile
+  .drain
+  .unsafeRunAsyncAndForget()
+// Started(2018-12-20T00:00:00Z,85684138-e0a6-4651-800a-53cc57e45a55)
+testContext.tick(1.hour)
+// Ended(2018-12-20T00:30:00Z,85684138-e0a6-4651-800a-53cc57e45a55)
+```
+
+---
+
+## A stream of sessions
+
+![Session streams](./assets/session-streams.png)
+
+???
+
+Par join to choose how many concurrent sessions to have.
+
+---
+
+## Concurrent sessions
+
+```scala
+val numConcurrent = 3
+
+Stream.emit(idealSession)
+  .repeat
+  .take(5) // limit to 5 for example
+  .parJoin(numConcurrent)
+  .evalMap(event => IO(println(event)))
+  .compile
+  .drain
+  .unsafeRunAsyncAndForget()
+```
+
+--
+
+```scala
+testContext.tick(1.hour)
+// Started(2018-12-20T01:00:00Z,dcfbce18-5d60-4e3d-9eee-ab508f2dca29)
+// Started(2018-12-20T01:00:00Z,7bb5b860-139c-45f7-b807-36c037a0fbe9)
+// Started(2018-12-20T01:00:00Z,2e3b5e61-624b-4ba2-b422-d029c093dfe3)
+// Ended(2018-12-20T01:30:00Z,dcfbce18-5d60-4e3d-9eee-ab508f2dca29)
+// Ended(2018-12-20T01:30:00Z,2e3b5e61-624b-4ba2-b422-d029c093dfe3)
+// Ended(2018-12-20T01:30:00Z,7bb5b860-139c-45f7-b807-36c037a0fbe9)
+// Started(2018-12-20T01:30:00Z,8746560f-6123-4d36-9b63-87291c6a648a)
+// Started(2018-12-20T01:30:00Z,1dcf375f-3c71-4e0b-94cf-1d9c96e0f4f3)
+// Ended(2018-12-20T02:00:00Z,8746560f-6123-4d36-9b63-87291c6a648a)
+// Ended(2018-12-20T02:00:00Z,1dcf375f-3c71-4e0b-94cf-1d9c96e0f4f3)
+```
+
+???
+
+Sessions are repeated forever.
+
+---
+
+## Add another scenario!
+
+```scala
+def pauseSession: Stream[IO, PlaybackEvent] = for {
+  sessionId <- Stream.eval(IO(UUID.randomUUID()))
+  s <- nowS.map(Started(_, sessionId)) ++
+    nowS.map(Paused(_, sessionId)).delayBy(20.seconds) ++
+    nowS.map(Resumed(_, sessionId)).delayBy(5.seconds) ++
+    nowS.map(Ended(_, sessionId)).delayBy(20.minutes)
+} yield s
+```
+
+---
+
+## Running multiple scenarios
+
+```scala
+Stream.emits(List(idealSession, pauseSession))
+  .repeat
+  .take(4) // limit to 4 for example
+  .parJoin(numConcurrent)
+  .evalMap(event => IO(println(event)))
+  .compile
+  .drain
+  .unsafeRunAsyncAndForget()
+```
+
+--
+
+```scala
+testContext.tick(1.hour)
+// Started(2018-12-20T02:00:00Z,29497329-e7d3-4599-b166-96ca9950f086)
+// Started(2018-12-20T02:00:00Z,334e399a-971c-4c9f-8667-e097f4e4bcef)
+// Started(2018-12-20T02:00:00Z,9d4f830f-91c3-42a3-811d-ad2ec4db7323)
+// Paused(2018-12-20T02:00:20Z,334e399a-971c-4c9f-8667-e097f4e4bcef)
+// Resumed(2018-12-20T02:00:25Z,334e399a-971c-4c9f-8667-e097f4e4bcef)
+// Ended(2018-12-20T02:20:25Z,334e399a-971c-4c9f-8667-e097f4e4bcef)
+// Started(2018-12-20T02:20:25Z,baa69d3d-3192-431f-a140-1c7cdd0f9a44)
+// Paused(2018-12-20T02:20:45Z,baa69d3d-3192-431f-a140-1c7cdd0f9a44)
+// Resumed(2018-12-20T02:20:50Z,baa69d3d-3192-431f-a140-1c7cdd0f9a44)
+// Ended(2018-12-20T02:30:00Z,29497329-e7d3-4599-b166-96ca9950f086)
+// Ended(2018-12-20T02:30:00Z,9d4f830f-91c3-42a3-811d-ad2ec4db7323)
+// Ended(2018-12-20T02:40:50Z,baa69d3d-3192-431f-a140-1c7cdd0f9a44)
+```
+
+---
+
+## Testing
+
+Can use `cats.effect.laws.util.TestContext` to simulate time.
+
+```scala
+val f = idealSession
+  .compile
+  .toList
+  .unsafeToFuture()
+```
+
+--
+
+```scala
+f.value
+// res9: Option[scala.util.Try[List[PlaybackEvent]]] = None
+```
+
+--
+
+```scala
+testContext.tick(1.hour)
+f.value
+// res11: Option[scala.util.Try[List[PlaybackEvent]]] = Some(
+//   Success(
+//     List(
+//       Started(2018-12-20T03:00:00Z, 129f86e6-1341-42cd-9587-a96bd326934e),
+//       Ended(2018-12-20T03:30:00Z, 129f86e6-1341-42cd-9587-a96bd326934e)
+//     )
+//   )
+// )
+```
+
+---
+
+## Counting sessions
+
+```scala
+val f2 = Stream.emit(idealSession)
+  .repeat
+  .parJoin(1000)
+  .interruptAfter(1.hour)
+  .compile
+  .toList
+  // count sessions
+  .map(_.groupBy(_.sessionId).keySet.size)
+  .unsafeToFuture()
+```
+
+`idealSession` lasts 30 minutes, so after 1 hour there should be ~2000 sessions.
+
+--
+
+```scala
+testContext.tick(1.hour)
+f2.value
+// res13: Option[scala.util.Try[Int]] = Some(Success(2000))
+```
+👌
+
+---
+
+## Further reading and links
+
+* [FS2](https://github.com/functional-streams-for-scala/fs2) by [@mpilquist](https://github.com/mpilquist)
+* [cats-effect](https://github.com/typelevel/cats-effect)
+
+## Thanks!
+
+* [mdoc](https://github.com/scalameta/mdoc) used to evaluate scala examples
+
+## Questions?
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
