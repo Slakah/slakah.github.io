@@ -2,21 +2,21 @@
 <rss version="2.0">
     <channel>
         <title>Gubbns Blog</title>
-        <link>https://slakah.github.io/blog</link>
+        <link>https://gubbns.com/blog</link>
         <description>The best place to stay up-to-date with the latest Gubbns news and events.</description>
         <lastBuildDate>Mon, 09 Dec 2019 06:00:00 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
             <title>Gubbns Blog</title>
-            <url>https://slakah.github.io/img/favicon.svg</url>
-            <link>https://slakah.github.io/blog</link>
+            <url>https://gubbns.com/img/favicon.svg</url>
+            <link>https://gubbns.com/blog</link>
         </image>
         <copyright>Copyright © 2019 James Collier</copyright>
         <item>
             <title><![CDATA[Hello World]]></title>
-            <link>https://slakah.github.io/blog/2019/12/09/hello-world.html</link>
-            <guid>https://slakah.github.io/blog/2019/12/09/hello-world.html</guid>
+            <link>https://gubbns.com/blog/2019/12/09/hello-world.html</link>
+            <guid>https://gubbns.com/blog/2019/12/09/hello-world.html</guid>
             <pubDate>Mon, 09 Dec 2019 06:00:00 GMT</pubDate>
             <description><![CDATA[<p>Hello world! Quick site created using <a href="https://docusaurus.io/">docusaurus</a> source can be seen <a href="https://github.com/Slakah/slakah.github.io">here</a>.</p> ]]></description>
         </item>

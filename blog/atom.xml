@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://slakah.github.io/blog</id>
+    <id>https://gubbns.com/blog</id>
     <title>Gubbns Blog</title>
     <updated>2019-12-09T06:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://slakah.github.io/blog"/>
+    <link rel="alternate" href="https://gubbns.com/blog"/>
     <subtitle>The best place to stay up-to-date with the latest Gubbns news and events.</subtitle>
-    <logo>https://slakah.github.io/img/favicon.svg</logo>
+    <logo>https://gubbns.com/img/favicon.svg</logo>
     <rights>Copyright © 2019 James Collier</rights>
     <entry>
         <title type="html"><![CDATA[Hello World]]></title>
-        <id>https://slakah.github.io/blog/2019/12/09/hello-world.html</id>
-        <link href="https://slakah.github.io/blog/2019/12/09/hello-world.html"/>
+        <id>https://gubbns.com/blog/2019/12/09/hello-world.html</id>
+        <link href="https://gubbns.com/blog/2019/12/09/hello-world.html"/>
         <updated>2019-12-09T06:00:00.000Z</updated>
         <summary type="html"><![CDATA[<p>Hello world! Quick site created using <a href="https://docusaurus.io/">docusaurus</a> source can be seen <a href="https://github.com/Slakah/slakah.github.io">here</a>.</p> ]]></summary>
         <author>
