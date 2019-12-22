@@ -25,9 +25,9 @@ jobs:
         sudo chmod +x /usr/local/bin/jq
         sudo curl -Lo /usr/local/bin/coursier https://git.io/coursier-cli
         sudo chmod +x /usr/local/bin/coursier
-    - name: yarn build
+    - name: build site
       run: |
         ./bin/build-talks.sh
-        cd website && yarn install && yarn build
+        sbt 'docs/docusaurusCreateSite'
       env:
         CI: true
