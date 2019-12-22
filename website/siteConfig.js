@@ -14,6 +14,8 @@ const siteConfig = {
   projectName: 'slakah.github.io',
   organizationName: 'slakah',
 
+  customDocsPath: "site-docs/target/mdoc",
+
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     { blog: true, label: 'Blog' },

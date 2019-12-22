@@ -28,6 +28,6 @@ jobs:
     - name: yarn build
       run: |
         ./bin/build-talks.sh
-        cd website && yarn install && yarn build
+        sbt 'docs/docusaurusCreateSite'
       env:
         CI: true
