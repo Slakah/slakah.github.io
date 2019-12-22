@@ -7,8 +7,10 @@ const siteConfig = {
   title: 'Gubbns', // Title for your website.
   tagline: 'Stuff to share',
   twitterUsername: 'JRCCollier',
-  url: 'https://slakah.github.io', // Your website URL
+  url: 'https://gubbns.com', // Your website URL
   baseUrl: '/', // Base URL for your project */
+
+  cname: 'gubbns.com',
 
   // Used for publishing and more
   projectName: 'slakah.github.io',
