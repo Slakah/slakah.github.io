@@ -9,6 +9,7 @@ const siteConfig = {
   twitterUsername: 'JRCCollier',
   url: 'https://gubbns.com', // Your website URL
   baseUrl: '/', // Base URL for your project */
+  docsUrl: '',
 
   cname: 'gubbns.com',
 
