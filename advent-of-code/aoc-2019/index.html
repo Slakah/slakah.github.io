@@ -70,4 +70,156 @@ run(input2.updated(<span class="hljs-number">1</span>, <span class="hljs-number"
   .get
 <span class="hljs-comment">// res4: Int = 6979</span>
 </code></pre>
-</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#problem-1">Problem 1</a><ul class="toc-headings"><li><a href="#part-1">Part 1</a></li><li><a href="#part-2">Part 2</a></li></ul></li><li><a href="#problem-2">Problem 2</a><ul class="toc-headings"><li><a href="#part-1-1">Part 1</a></li><li><a href="#part-2-1">Part 2</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"></a><div><h5>Projects</h5><a href="https://github.com/slakah/uritemplate4s" target="_blank" rel="noreferrer noopener">uritemplate4s</a></div><div><h5>More</h5><a href="/blog">Blog</a><a href="/talks">Talks</a><a href="https://github.com/slakah">GitHub</a><a class="github-button" href="https://github.com/slakah" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/JRCCollier" class="twitter-follow-button">Follow @JRCCollier</a></div></div></section><section class="copyright">Copyright © 2019 James Collier</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
+<h2><a class="anchor" aria-hidden="true" id="problem-3"></a><a href="#problem-3" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Problem 3</h2>
+<p><a href="https://adventofcode.com/2019/day/3">Problem link</a></p>
+<h3><a class="anchor" aria-hidden="true" id="part-1-2"></a><a href="#part-1-2" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Part 1</h3>
+<p>Coerce the strings into the required data. Keep track of the starting position
+of each path segment.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">sealed</span> <span class="hljs-class"><span class="hljs-keyword">trait</span> <span class="hljs-title">PathSegment</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">x</span></span>: <span class="hljs-type">Int</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">y</span></span>: <span class="hljs-type">Int</span>
+}
+<span class="hljs-keyword">final</span> <span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Horizontal</span>(<span class="hljs-params">x: <span class="hljs-type">Int</span>, y: <span class="hljs-type">Int</span>, dx: <span class="hljs-type">Int</span></span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">PathSegment</span></span>
+<span class="hljs-keyword">final</span> <span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vertical</span>(<span class="hljs-params">x: <span class="hljs-type">Int</span>, y: <span class="hljs-type">Int</span>, dy: <span class="hljs-type">Int</span></span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">PathSegment</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">PathSegment</span> </span>{
+
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> commandPattern = <span class="hljs-string">""</span><span class="hljs-string">"([URDL])(\d+)"</span><span class="hljs-string">""</span>.r
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">unsafeFromString</span></span>(s: <span class="hljs-type">String</span>, x: <span class="hljs-type">Int</span>, y: <span class="hljs-type">Int</span>): <span class="hljs-type">PathSegment</span> = {
+    s <span class="hljs-keyword">match</span> {
+      <span class="hljs-keyword">case</span> commandPattern(<span class="hljs-string">"U"</span>, delta) =&gt; <span class="hljs-type">Vertical</span>(x, y, delta.toInt)
+      <span class="hljs-keyword">case</span> commandPattern(<span class="hljs-string">"R"</span>, delta) =&gt; <span class="hljs-type">Horizontal</span>(x, y, delta.toInt)
+      <span class="hljs-keyword">case</span> commandPattern(<span class="hljs-string">"D"</span>, delta) =&gt; <span class="hljs-type">Vertical</span>(x, y, -delta.toInt)
+      <span class="hljs-keyword">case</span> commandPattern(<span class="hljs-string">"L"</span>, delta) =&gt; <span class="hljs-type">Horizontal</span>(x, y, -delta.toInt)
+      <span class="hljs-keyword">case</span> unknown =&gt; <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">IllegalArgumentException</span>(<span class="hljs-string">s"Unexpected command string <span class="hljs-subst">$unknown</span>"</span>)
+    }
+  }
+}
+
+<span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">Path</span> </span>= <span class="hljs-type">List</span>[<span class="hljs-type">PathSegment</span>]
+<span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Path</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">unsafeFromString</span></span>(s: <span class="hljs-type">String</span>): (<span class="hljs-type">Path</span>, <span class="hljs-type">Path</span>) = {
+    <span class="hljs-keyword">val</span> (line1, line2) = s.span(_ != '\n')
+    (parsePathLine(line1), parsePathLine(line2.trim))
+  }
+
+  <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parsePathLine</span></span>(s: <span class="hljs-type">String</span>): <span class="hljs-type">Path</span> = s
+    .split(<span class="hljs-string">","</span>)
+    .toList
+    .foldLeft((<span class="hljs-type">List</span>.empty[<span class="hljs-type">PathSegment</span>], <span class="hljs-number">0</span>, <span class="hljs-number">0</span>)) { <span class="hljs-keyword">case</span> ((acc, x, y), segmentS) =&gt;
+      <span class="hljs-keyword">val</span> segment = <span class="hljs-type">PathSegment</span>.unsafeFromString(segmentS, x, y)
+      segment <span class="hljs-keyword">match</span> {
+        <span class="hljs-keyword">case</span> horizontal: <span class="hljs-type">Horizontal</span> =&gt;
+          (horizontal :: acc, x + horizontal.dx, y)
+        <span class="hljs-keyword">case</span> vertical: <span class="hljs-type">Vertical</span> =&gt;
+          (vertical :: acc, x, y + vertical.dy)
+      }
+    }
+    ._1
+    .reverse
+}
+</code></pre>
+<p>For the problem the distinction between horizontal and vertical doesn't matter.
+However it's much easier to visualize.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">findIntersectPoints</span></span>(path1: <span class="hljs-type">Path</span>, path2: <span class="hljs-type">Path</span>) =
+  <span class="hljs-keyword">for</span> {
+    segment1 &lt;- path1
+    segment2 &lt;- path2
+    point &lt;- (segment1, segment2) <span class="hljs-keyword">match</span> {
+      <span class="hljs-keyword">case</span> (_: <span class="hljs-type">Horizontal</span>, _: <span class="hljs-type">Horizontal</span>) =&gt; <span class="hljs-type">None</span>
+      <span class="hljs-keyword">case</span> (_: <span class="hljs-type">Vertical</span>, _: <span class="hljs-type">Vertical</span>) =&gt; <span class="hljs-type">None</span>
+      <span class="hljs-keyword">case</span> (horizontal: <span class="hljs-type">Horizontal</span>, vertical: <span class="hljs-type">Vertical</span>) =&gt;
+        findIntersectPoint(horizontal, vertical)
+      <span class="hljs-keyword">case</span> (vertical: <span class="hljs-type">Vertical</span>, horizontal: <span class="hljs-type">Horizontal</span>) =&gt;
+        findIntersectPoint(horizontal, vertical)
+    }
+  } <span class="hljs-keyword">yield</span> point
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">findIntersectPoint</span></span>(
+  horizontal: <span class="hljs-type">Horizontal</span>,
+  vertical: <span class="hljs-type">Vertical</span>
+): <span class="hljs-type">Option</span>[(<span class="hljs-type">Int</span>, <span class="hljs-type">Int</span>)] = (horizontal, vertical) <span class="hljs-keyword">match</span> {
+  <span class="hljs-keyword">case</span> (<span class="hljs-type">Horizontal</span>(x1, y1, dx), <span class="hljs-type">Vertical</span>(x2, y2, dy)) =&gt;
+    <span class="hljs-keyword">if</span> (y1 &lt; y2.max(y2 + dy) &amp;&amp; y1 &gt; y2.min(y2 + dy) &amp;&amp;
+        x2 &lt; x1.max(x1 + dx) &amp;&amp; x2 &gt; x1.min(x1 + dx)) {
+      <span class="hljs-type">Some</span>(x2 -&gt; y1)
+    } <span class="hljs-keyword">else</span> <span class="hljs-type">None</span>
+}
+</code></pre>
+<pre><code class="hljs css language-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">runPart1</span></span>(s: <span class="hljs-type">String</span>): <span class="hljs-type">Int</span> = {
+  <span class="hljs-keyword">val</span> (path1, path2) = <span class="hljs-type">Path</span>.unsafeFromString(s)
+  findIntersectPoints(path1, path2)
+    .map { <span class="hljs-keyword">case</span> (x, y) =&gt; x.abs + y.abs }
+    .min
+}
+</code></pre>
+<p>Run the examples.</p>
+<pre><code class="hljs css language-scala">runPart1("""R75,D30,R83,U83,L12,D49,R71,U7,L72
+U62,R66,U55,R34,D71,R55,D58,R83""")
+// res6: Int = 159
+runPart1("""R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51
+U98,R91,D20,R16,D67,R40,U7,R15,U6,R7""")
+// res7: Int = 135
+</code></pre>
+<p>Success!</p>
+<pre><code class="hljs css language-scala">runPart1(input3)
+<span class="hljs-comment">// res8: Int = 489</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="part-2-2"></a><a href="#part-2-2" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Part 2</h3>
+<p>Modify the function in part 1 to return the segments which intersect,
+making it easy to find the segments leading up to intersection.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">final</span> <span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Intersect</span>(<span class="hljs-params">
+  segment1: <span class="hljs-type">PathSegment</span>, segment2: <span class="hljs-type">PathSegment</span>,
+  x: <span class="hljs-type">Int</span>, y: <span class="hljs-type">Int</span></span>)</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">findIntersects</span></span>(path1: <span class="hljs-type">Path</span>, path2: <span class="hljs-type">Path</span>): <span class="hljs-type">List</span>[<span class="hljs-type">Intersect</span>] =
+  <span class="hljs-keyword">for</span> {
+    segment1 &lt;- path1
+    segment2 &lt;- path2
+    intersect &lt;- (segment1, segment2) <span class="hljs-keyword">match</span> {
+      <span class="hljs-keyword">case</span> (_: <span class="hljs-type">Horizontal</span>, _: <span class="hljs-type">Horizontal</span>) =&gt; <span class="hljs-type">None</span>
+      <span class="hljs-keyword">case</span> (_: <span class="hljs-type">Vertical</span>, _: <span class="hljs-type">Vertical</span>) =&gt; <span class="hljs-type">None</span>
+      <span class="hljs-keyword">case</span> (horizontal: <span class="hljs-type">Horizontal</span>, vertical: <span class="hljs-type">Vertical</span>) =&gt;
+        findIntersectPoint(horizontal, vertical).map { <span class="hljs-keyword">case</span> (x, y) =&gt;
+          <span class="hljs-type">Intersect</span>(horizontal, vertical, x, y)
+        }
+      <span class="hljs-keyword">case</span> (vertical: <span class="hljs-type">Vertical</span>, horizontal: <span class="hljs-type">Horizontal</span>) =&gt;
+        findIntersectPoint(horizontal, vertical).map { <span class="hljs-keyword">case</span> (x, y) =&gt;
+          <span class="hljs-type">Intersect</span>(vertical, horizontal, x, y)
+        }
+    }
+  } <span class="hljs-keyword">yield</span> intersect
+</code></pre>
+<p>Count the steps to the intersection, and add the distance to the intersection point.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">runPart2</span></span>(s: <span class="hljs-type">String</span>) = {
+  <span class="hljs-keyword">val</span> (path1, path2) = <span class="hljs-type">Path</span>.unsafeFromString(s)
+  <span class="hljs-keyword">val</span> intersects = findIntersects(path1, path2)
+  <span class="hljs-keyword">val</span> stepCounts = intersects.map { <span class="hljs-keyword">case</span> <span class="hljs-type">Intersect</span>(segment1, segment2, x, y) =&gt;
+    <span class="hljs-keyword">val</span> stepCount1 = countSteps(path1.takeWhile(_ != segment1)) +
+      ((segment1.x - x).abs + (segment1.y - y).abs)
+    <span class="hljs-keyword">val</span> stepCount2 = countSteps(path2.takeWhile(_ != segment2)) +
+      ((segment2.x - x).abs + (segment2.y - y).abs)
+    stepCount1 + stepCount2
+  }
+  stepCounts.min
+}
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">countSteps</span></span>(path: <span class="hljs-type">Path</span>) = {
+  path.foldLeft(<span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">case</span> (count, <span class="hljs-type">Horizontal</span>(_, _, dx)) =&gt; count + dx.abs
+    <span class="hljs-keyword">case</span> (count, <span class="hljs-type">Vertical</span>(_, _, dy)) =&gt; count + dy.abs
+  }
+}
+</code></pre>
+<p>Examples.</p>
+<pre><code class="hljs css language-scala">runPart2("""R75,D30,R83,U83,L12,D49,R71,U7,L72
+U62,R66,U55,R34,D71,R55,D58,R83""")
+// res9: Int = 610
+runPart2("""R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51
+U98,R91,D20,R16,D67,R40,U7,R15,U6,R7""")
+// res10: Int = 410
+</code></pre>
+<pre><code class="hljs css language-scala">runPart2(input3)
+<span class="hljs-comment">// res11: Int = 93654</span>
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#problem-1">Problem 1</a><ul class="toc-headings"><li><a href="#part-1">Part 1</a></li><li><a href="#part-2">Part 2</a></li></ul></li><li><a href="#problem-2">Problem 2</a><ul class="toc-headings"><li><a href="#part-1-1">Part 1</a></li><li><a href="#part-2-1">Part 2</a></li></ul></li><li><a href="#problem-3">Problem 3</a><ul class="toc-headings"><li><a href="#part-1-2">Part 1</a></li><li><a href="#part-2-2">Part 2</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"></a><div><h5>Projects</h5><a href="https://github.com/slakah/uritemplate4s" target="_blank" rel="noreferrer noopener">uritemplate4s</a></div><div><h5>More</h5><a href="/blog">Blog</a><a href="/talks">Talks</a><a href="https://github.com/slakah">GitHub</a><a class="github-button" href="https://github.com/slakah" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/JRCCollier" class="twitter-follow-button">Follow @JRCCollier</a></div></div></section><section class="copyright">Copyright © 2019 James Collier</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
