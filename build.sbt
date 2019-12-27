@@ -9,6 +9,10 @@ lazy val docs = project
   .enablePlugins(DocusaurusPlugin, MdocPlugin)
   .settings(
     moduleName := "site-docs",
+    mdocExtraArguments += "--no-link-hygiene",
+    libraryDependencies ++= Seq(
+      "org.typelevel" %% "cats-core" % "2.0.0"
+    ),
     watchSources += baseDirectory.in(ThisBuild).value / "docs"
   )
 
