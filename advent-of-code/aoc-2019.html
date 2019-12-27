@@ -222,4 +222,79 @@ U98,R91,D20,R16,D67,R40,U7,R15,U6,R7""")
 <pre><code class="hljs css language-scala">runPart2(input3)
 <span class="hljs-comment">// res11: Int = 93654</span>
 </code></pre>
-</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#problem-1">Problem 1</a><ul class="toc-headings"><li><a href="#part-1">Part 1</a></li><li><a href="#part-2">Part 2</a></li></ul></li><li><a href="#problem-2">Problem 2</a><ul class="toc-headings"><li><a href="#part-1-1">Part 1</a></li><li><a href="#part-2-1">Part 2</a></li></ul></li><li><a href="#problem-3">Problem 3</a><ul class="toc-headings"><li><a href="#part-1-2">Part 1</a></li><li><a href="#part-2-2">Part 2</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"></a><div><h5>Projects</h5><a href="https://github.com/slakah/uritemplate4s" target="_blank" rel="noreferrer noopener">uritemplate4s</a></div><div><h5>More</h5><a href="/blog">Blog</a><a href="/talks">Talks</a><a href="https://github.com/slakah">GitHub</a><a class="github-button" href="https://github.com/slakah" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/JRCCollier" class="twitter-follow-button">Follow @JRCCollier</a></div></div></section><section class="copyright">Copyright © 2019 James Collier</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
+<h2><a class="anchor" aria-hidden="true" id="problem-4"></a><a href="#problem-4" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Problem 4</h2>
+<p><a href="https://adventofcode.com/2019/day/4">Problem link</a></p>
+<h3><a class="anchor" aria-hidden="true" id="part-1-3"></a><a href="#part-1-3" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Part 1</h3>
+<p>Apply the rule.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> cats.implicits._
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">isDescending</span></span>(digits: <span class="hljs-type">List</span>[<span class="hljs-type">Int</span>]): <span class="hljs-type">Boolean</span> =
+  digits.foldM(<span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">case</span> (prev, curr) <span class="hljs-keyword">if</span> curr &lt; prev =&gt; <span class="hljs-type">None</span>
+    <span class="hljs-keyword">case</span> (prev, curr) <span class="hljs-keyword">if</span> curr &gt;= prev =&gt; <span class="hljs-type">Some</span>(curr)
+  }.isDefined
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hasDoubleDigit</span></span>(digits: <span class="hljs-type">List</span>[<span class="hljs-type">Int</span>]): <span class="hljs-type">Boolean</span> =
+  digits.foldM(<span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">case</span> (prev, curr) <span class="hljs-keyword">if</span> prev == curr =&gt; <span class="hljs-type">None</span>
+    <span class="hljs-keyword">case</span> (prev, curr) =&gt; <span class="hljs-type">Some</span>(curr)
+  }.isEmpty
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">rule</span></span>(digits: <span class="hljs-type">List</span>[<span class="hljs-type">Int</span>]): <span class="hljs-type">Boolean</span> =
+  isDescending(digits) &amp;&amp; hasDoubleDigit(digits)
+</code></pre>
+<p>Test the examples.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> scala.annotation.tailrec
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">digits</span></span>(i: <span class="hljs-type">Int</span>): <span class="hljs-type">List</span>[<span class="hljs-type">Int</span>] = {
+  <span class="hljs-meta">@tailrec</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">loop</span></span>(n: <span class="hljs-type">Int</span>, acc: <span class="hljs-type">List</span>[<span class="hljs-type">Int</span>]): <span class="hljs-type">List</span>[<span class="hljs-type">Int</span>] = {
+    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) acc
+    <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">val</span> x = (n / <span class="hljs-number">10</span>) * <span class="hljs-number">10</span>
+      loop(x / <span class="hljs-number">10</span>, n - x :: acc)
+    }
+  }
+  loop(i, <span class="hljs-type">List</span>.empty)
+}
+
+<span class="hljs-comment">// get digits and put in list</span>
+digits(<span class="hljs-number">12345678</span>)
+<span class="hljs-comment">// res13: List[Int] = List(1, 2, 3, 4, 5, 6, 7, 8)</span>
+
+assert(rule(digits(<span class="hljs-number">111111</span>)) == <span class="hljs-literal">true</span>)
+assert(rule(digits(<span class="hljs-number">223450</span>)) == <span class="hljs-literal">false</span>)
+assert(rule(digits(<span class="hljs-number">123789</span>)) == <span class="hljs-literal">false</span>)
+</code></pre>
+<p>Let's try brute forcing.</p>
+<pre><code class="hljs css language-scala">(<span class="hljs-number">145852</span> to <span class="hljs-number">616942</span>).count(i =&gt; rule(digits(i)))
+<span class="hljs-comment">// res17: Int = 1767</span>
+</code></pre>
+<p>Looks like it completes in a sensible amount of time!</p>
+<h3><a class="anchor" aria-hidden="true" id="part-2-3"></a><a href="#part-2-3" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Part 2</h3>
+<pre><code class="hljs css language-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hasOnlyDoubleDigit</span></span>(digits: <span class="hljs-type">List</span>[<span class="hljs-type">Int</span>]): <span class="hljs-type">Boolean</span> =
+  digits
+    .foldM((<span class="hljs-number">1</span>, <span class="hljs-number">0</span>)) {
+      <span class="hljs-keyword">case</span> ((combo, prev), curr) <span class="hljs-keyword">if</span> prev == curr =&gt; <span class="hljs-type">Some</span>((combo + <span class="hljs-number">1</span>, curr))
+      <span class="hljs-keyword">case</span> ((<span class="hljs-number">2</span>, prev), curr) <span class="hljs-keyword">if</span> prev != curr =&gt; <span class="hljs-type">None</span>
+      <span class="hljs-keyword">case</span> ((_, prev), curr) <span class="hljs-keyword">if</span> prev != curr =&gt; <span class="hljs-type">Some</span>((<span class="hljs-number">1</span>, curr))
+    }
+    .map {
+      <span class="hljs-keyword">case</span> (<span class="hljs-number">2</span>, _) =&gt; <span class="hljs-literal">true</span>
+      <span class="hljs-keyword">case</span> _ =&gt; <span class="hljs-literal">false</span>
+    }
+    .getOrElse(<span class="hljs-literal">true</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">newRule</span></span>(digits: <span class="hljs-type">List</span>[<span class="hljs-type">Int</span>]): <span class="hljs-type">Boolean</span> =
+  isDescending(digits) &amp;&amp; hasOnlyDoubleDigit(digits)
+</code></pre>
+<p>Examples.</p>
+<pre><code class="hljs css language-scala">assert(newRule(digits(<span class="hljs-number">112233</span>)) == <span class="hljs-literal">true</span>)
+assert(newRule(digits(<span class="hljs-number">123444</span>)) == <span class="hljs-literal">false</span>)
+assert(newRule(digits(<span class="hljs-number">111122</span>)) == <span class="hljs-literal">true</span>)
+assert(newRule(digits(<span class="hljs-number">111111</span>)) == <span class="hljs-literal">false</span>)
+</code></pre>
+<pre><code class="hljs css language-scala">(<span class="hljs-number">145852</span> to <span class="hljs-number">616942</span>).count(i =&gt; newRule(digits(i)))
+<span class="hljs-comment">// res22: Int = 1192</span>
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#problem-1">Problem 1</a><ul class="toc-headings"><li><a href="#part-1">Part 1</a></li><li><a href="#part-2">Part 2</a></li></ul></li><li><a href="#problem-2">Problem 2</a><ul class="toc-headings"><li><a href="#part-1-1">Part 1</a></li><li><a href="#part-2-1">Part 2</a></li></ul></li><li><a href="#problem-3">Problem 3</a><ul class="toc-headings"><li><a href="#part-1-2">Part 1</a></li><li><a href="#part-2-2">Part 2</a></li></ul></li><li><a href="#problem-4">Problem 4</a><ul class="toc-headings"><li><a href="#part-1-3">Part 1</a></li><li><a href="#part-2-3">Part 2</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"></a><div><h5>Projects</h5><a href="https://github.com/slakah/uritemplate4s" target="_blank" rel="noreferrer noopener">uritemplate4s</a></div><div><h5>More</h5><a href="/blog">Blog</a><a href="/talks">Talks</a><a href="https://github.com/slakah">GitHub</a><a class="github-button" href="https://github.com/slakah" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/JRCCollier" class="twitter-follow-button">Follow @JRCCollier</a></div></div></section><section class="copyright">Copyright © 2019 James Collier</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
