@@ -11,7 +11,7 @@ lazy val docs = project
     moduleName := "site-docs",
     mdocExtraArguments += "--no-link-hygiene",
     libraryDependencies ++= Seq(
-      "org.typelevel" %% "cats-core" % "2.1.0"
+      "org.typelevel" %% "cats-core" % "2.1.1"
     ),
     watchSources += baseDirectory.in(ThisBuild).value / "docs"
   )
