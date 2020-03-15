@@ -43,7 +43,7 @@ if (env.BRANCH == 'master' && env.DEPLOY_TO == 'production') {
 The scripted pipeline also has the advantage of being much more explicit, so you don't need to waste time looking up
 the documentation as to what caveats might exist for the [built-in condition](https://jenkins.io/doc/book/pipeline/syntax/#built-in-conditions).
 
-## Reuse env var for cred id
+## Credential naming scheme
 
 If you were to see the username/password credential `artifactory-commerce-creds`, how would you know the name of the
 environment variables that they should be set to.
@@ -60,10 +60,40 @@ withCredentials([
   string(credentialsId: 'ARTIFACTORY_PASSWORD', variable: 'ARTIFACTORY_PASSWORD')]) {
 ```
 
-## Pattern to avoid deep nestings
+## Avoiding deep nesting
 
-The DSL provided by Jenkins encourages deep nesting, in the [sequential stages](https://jenkins.io/doc/book/pipeline/syntax/#sequential-stages)
-example, the pipeline is 9 levels deep. This can make it quite difficult to visually determine whether the nesting
-is correct. One way to alleviate this 
+The [DSL] provided by Jenkins encourages deep nesting, in the [sequential stages](https://jenkins.io/doc/book/pipeline/syntax/#sequential-stages)
+example, the pipeline is 9 levels deep. This can make it quite difficult to visually the correctness of your Jenkinsfile,
+and Jenkins really doesn't assist much in validate syntactic correctness locally. You may choose to selectively avoid nesting for
+multiple statements, e.g.
+
+```groovy
+node {
+  ansiColor('xterm') {
+
+  withCredentials([
+    string(credentialsId: 'ARTIFACTORY_USERNAME', variable: 'ARTIFACTORY_USERNAME'),
+    string(credentialsId: 'ARTIFACTORY_PASSWORD', variable: 'ARTIFACTORY_PASSWORD'),
+    usernamePassword(credentialsId: 'GITHUB_TOKEN', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_TOKEN')]) {
+  
+  checkout scm
+
+  stage('Validate') {
+    // validation logic here
+  }
+
+  } // end: withCredentials
+  } // end: ansiColor
+}
+```
+
+## Minimum number of pipelines
+
+Try and only produce additional pipelines when there's a clear benefit. Don't create
+pipelines as a means to increase code reuse, prefer shared scripts or libraries. Most
+of our services, have a main pipeline `Jenkinsfile` built on commit or tag push.
+This pipelines serves to validate the build (tests/linting), then on the `master` branch
+invoke a deploy pipeline. `jenkins/deploy-service.groovy` handles deploying the service,
+with the setting concurrent builds disabled.
 
 [DSL]: https://en.wikipedia.org/wiki/Domain-specific_language
