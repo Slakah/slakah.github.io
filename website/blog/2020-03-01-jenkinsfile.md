@@ -70,7 +70,6 @@ multiple statements, e.g.
 ```groovy
 node {
   ansiColor('xterm') {
-
   withCredentials([
     string(credentialsId: 'ARTIFACTORY_USERNAME', variable: 'ARTIFACTORY_USERNAME'),
     string(credentialsId: 'ARTIFACTORY_PASSWORD', variable: 'ARTIFACTORY_PASSWORD'),
@@ -87,7 +86,7 @@ node {
 }
 ```
 
-## Minimum number of pipelines
+## Minimize the number of pipelines
 
 Try and only produce additional pipelines when there's a clear benefit. Don't create
 pipelines as a means to increase code reuse, prefer shared scripts or libraries. Most
