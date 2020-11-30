@@ -505,27 +505,33 @@ K)L"""
 
 <span class="hljs-keyword">val</span> orbitMap = <span class="hljs-type">Tree</span>.parseOrbits(exampleInput)
 <span class="hljs-comment">// orbitMap: Tree = Node(</span>
-<span class="hljs-comment">//   "COM",</span>
-<span class="hljs-comment">//   List(</span>
+<span class="hljs-comment">//   id = "COM",</span>
+<span class="hljs-comment">//   edges = List(</span>
 <span class="hljs-comment">//     Node(</span>
-<span class="hljs-comment">//       "B",</span>
-<span class="hljs-comment">//       List(</span>
+<span class="hljs-comment">//       id = "B",</span>
+<span class="hljs-comment">//       edges = List(</span>
 <span class="hljs-comment">//         Node(</span>
-<span class="hljs-comment">//           "C",</span>
-<span class="hljs-comment">//           List(</span>
+<span class="hljs-comment">//           id = "C",</span>
+<span class="hljs-comment">//           edges = List(</span>
 <span class="hljs-comment">//             Node(</span>
-<span class="hljs-comment">//               "D",</span>
-<span class="hljs-comment">//               List(</span>
+<span class="hljs-comment">//               id = "D",</span>
+<span class="hljs-comment">//               edges = List(</span>
 <span class="hljs-comment">//                 Node(</span>
-<span class="hljs-comment">//                   "E",</span>
-<span class="hljs-comment">//                   List(Leaf("F"), Node("J", List(Node("K", List(Leaf("L"))))))</span>
+<span class="hljs-comment">//                   id = "E",</span>
+<span class="hljs-comment">//                   edges = List(</span>
+<span class="hljs-comment">//                     Leaf(id = "F"),</span>
+<span class="hljs-comment">//                     Node(</span>
+<span class="hljs-comment">//                       id = "J",</span>
+<span class="hljs-comment">//                       edges = List(Node(id = "K", edges = List(Leaf(id = "L"))))</span>
+<span class="hljs-comment">//                     )</span>
+<span class="hljs-comment">//                   )</span>
 <span class="hljs-comment">//                 ),</span>
-<span class="hljs-comment">//                 Leaf("I")</span>
+<span class="hljs-comment">//                 Leaf(id = "I")</span>
 <span class="hljs-comment">//               )</span>
 <span class="hljs-comment">//             )</span>
 <span class="hljs-comment">//           )</span>
 <span class="hljs-comment">//         ),</span>
-<span class="hljs-comment">//         Node("G", List(Leaf("H")))</span>
+<span class="hljs-comment">//         Node(id = "G", edges = List(Leaf(id = "H")))</span>
 <span class="hljs-comment">//       )</span>
 <span class="hljs-comment">//     )</span>
 <span class="hljs-comment">//   )</span>
@@ -592,7 +598,9 @@ myPath.diff(santaPath)
 } <span class="hljs-keyword">yield</span> path1.diff(path2) ::: path2.diff(path1).reverse
 
 path(orbitMap2, <span class="hljs-string">"YOU"</span>, <span class="hljs-string">"SAN"</span>)
-<span class="hljs-comment">// res34: Option[List[String]] = Some(List("YOU", "K", "J", "E", "I", "SAN"))</span>
+<span class="hljs-comment">// res34: Option[List[String]] = Some(</span>
+<span class="hljs-comment">//   value = List("YOU", "K", "J", "E", "I", "SAN")</span>
+<span class="hljs-comment">// )</span>
 </code></pre>
 <p>Now try with the input...</p>
 <pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> pathToSanta = path(<span class="hljs-type">Tree</span>.parseOrbits(input6), <span class="hljs-string">"YOU"</span>, <span class="hljs-string">"SAN"</span>)
