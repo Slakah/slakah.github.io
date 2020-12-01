@@ -12,6 +12,10 @@ function Projects(props) {
       content: 'Scala implementation of URI Template ([RFC 6570](https://tools.ietf.org/html/rfc6570)).',
       title: '[uritemplate4s](https://github.com/Slakah/uritemplate4s)',
     },
+    {
+      content: '* [2020](/advent-of-code/aoc-2020.md)\n* [2019](/advent-of-code/aoc-2019.md) - only 6 solutions',
+      title: 'Scala solutions to Advent of Code'
+    }
   ];
 
   return (
