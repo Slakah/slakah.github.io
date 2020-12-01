@@ -13,7 +13,7 @@ function Projects(props) {
       title: '[uritemplate4s](https://github.com/Slakah/uritemplate4s)',
     },
     {
-      content: '* [2020](/advent-of-code/aoc-2020.md)\n* [2019](/advent-of-code/aoc-2019.md) - only 6 solutions',
+      content: '[2020](/advent-of-code/aoc-2020) and [2019](/advent-of-code/aoc-2019)',
       title: 'Scala solutions to Advent of Code'
     }
   ];
