@@ -180,32 +180,22 @@ val s = """..##.......
 #.##...#...
 #...##....#
 .#..#...#.#"""
-// s: String = """..##.......
-// #...#...#..
-// .#....#..#.
-// ..#.#...#.#
-// .#...##..#.
-// ..#.##.....
-// .#.#.#....#
-// .#........#
-// #.##...#...
-// #...##....#
-// .#..#...#.#"""
 
-val grid = parseGrid(s)
-// grid: Grid[Cell] = Array(
-//   Array(Open, Open, Tree, Tree, Open, Open, Open, Open, Open, Open, Open),
-//   Array(Tree, Open, Open, Open, Tree, Open, Open, Open, Tree, Open, Open),
-//   Array(Open, Tree, Open, Open, Open, Open, Tree, Open, Open, Tree, Open),
-//   Array(Open, Open, Tree, Open, Tree, Open, Open, Open, Tree, Open, Tree),
-//   Array(Open, Tree, Open, Open, Open, Tree, Tree, Open, Open, Tree, Open),
-//   Array(Open, Open, Tree, Open, Tree, Tree, Open, Open, Open, Open, Open),
-//   Array(Open, Tree, Open, Tree, Open, Tree, Open, Open, Open, Open, Tree),
-//   Array(Open, Tree, Open, Open, Open, Open, Open, Open, Open, Open, Tree),
-//   Array(Tree, Open, Tree, Tree, Open, Open, Open, Tree, Open, Open, Open),
-//   Array(Tree, Open, Open, Open, Tree, Tree, Open, Open, Open, Open, Tree),
-//   Array(Open, Tree, Open, Open, Tree, Open, Open, Open, Tree, Open, Tree)
-// )
+</code></pre>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> grid = parseGrid(s)
+<span class="hljs-comment">// grid: Grid[Cell] = Array(</span>
+<span class="hljs-comment">//   Array(Open, Open, Tree, Tree, Open, Open, Open, Open, Open, Open, Open),</span>
+<span class="hljs-comment">//   Array(Tree, Open, Open, Open, Tree, Open, Open, Open, Tree, Open, Open),</span>
+<span class="hljs-comment">//   Array(Open, Tree, Open, Open, Open, Open, Tree, Open, Open, Tree, Open),</span>
+<span class="hljs-comment">//   Array(Open, Open, Tree, Open, Tree, Open, Open, Open, Tree, Open, Tree),</span>
+<span class="hljs-comment">//   Array(Open, Tree, Open, Open, Open, Tree, Tree, Open, Open, Tree, Open),</span>
+<span class="hljs-comment">//   Array(Open, Open, Tree, Open, Tree, Tree, Open, Open, Open, Open, Open),</span>
+<span class="hljs-comment">//   Array(Open, Tree, Open, Tree, Open, Tree, Open, Open, Open, Open, Tree),</span>
+<span class="hljs-comment">//   Array(Open, Tree, Open, Open, Open, Open, Open, Open, Open, Open, Tree),</span>
+<span class="hljs-comment">//   Array(Tree, Open, Tree, Tree, Open, Open, Open, Tree, Open, Open, Open),</span>
+<span class="hljs-comment">//   Array(Tree, Open, Open, Open, Tree, Tree, Open, Open, Open, Open, Tree),</span>
+<span class="hljs-comment">//   Array(Open, Tree, Open, Open, Tree, Open, Open, Open, Tree, Open, Tree)</span>
+<span class="hljs-comment">// )</span>
 </code></pre>
 <p>Now let's render the grid to help debug.</p>
 <pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> $ivy.`org.typelevel::cats-core:<span class="hljs-number">2.3</span><span class="hljs-number">.0</span>`
