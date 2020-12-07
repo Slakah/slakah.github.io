@@ -446,4 +446,67 @@ slopes
 <pre><code class="hljs css language-scala">batch.count(validatePassport2)
 <span class="hljs-comment">// res11: Long = 133L</span>
 </code></pre>
-</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#problem-1">Problem 1</a><ul class="toc-headings"><li><a href="#part-1">Part 1</a></li><li><a href="#part-2">Part 2</a></li></ul></li><li><a href="#problem-2">Problem 2</a><ul class="toc-headings"><li><a href="#part-1-1">Part 1</a></li><li><a href="#part-2-1">Part 2</a></li></ul></li><li><a href="#problem-3">Problem 3</a><ul class="toc-headings"><li><a href="#part-1-2">Part 1</a></li><li><a href="#part-2-2">Part 2</a></li></ul></li><li><a href="#problem-4">Problem 4</a><ul class="toc-headings"><li><a href="#part-1-3">Part 1</a></li><li><a href="#part-2-3">Part 2</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"></a><div><h5>Projects</h5><a href="https://github.com/slakah/uritemplate4s" target="_blank" rel="noreferrer noopener">uritemplate4s</a></div><div><h5>More</h5><a href="/blog">Blog</a><a href="/talks">Talks</a><a href="https://github.com/slakah">GitHub</a><a class="github-button" href="https://github.com/slakah" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/JRCCollier" class="twitter-follow-button">Follow @JRCCollier</a></div></div></section><section class="copyright">Copyright © 2020 James Collier</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
+<h2><a class="anchor" aria-hidden="true" id="problem-5"></a><a href="#problem-5" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Problem 5</h2>
+<p><a href="https://adventofcode.com/2020/day/5">Problem link</a></p>
+<h3><a class="anchor" aria-hidden="true" id="part-1-4"></a><a href="#part-1-4" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Part 1</h3>
+<p>Split the string into row and column parts:</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> (encodedRow, encodedCol) = <span class="hljs-string">"FBFBBFFRLR"</span>.splitAt(<span class="hljs-number">7</span>)
+<span class="hljs-comment">// encodedRow: String = "FBFBBFF"</span>
+<span class="hljs-comment">// encodedCol: String = "RLR"</span>
+</code></pre>
+<p>Subdividing can be achieved using <code>foldLeft</code>:</p>
+<pre><code class="hljs css language-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decodeRow</span></span>(encoded: <span class="hljs-type">String</span>) = 
+  encoded.foldLeft((<span class="hljs-number">0</span>, <span class="hljs-number">127</span>)) {
+    <span class="hljs-keyword">case</span> ((low, high), '<span class="hljs-type">F</span>') =&gt;
+      (low, (low + high) / <span class="hljs-number">2</span>)
+    <span class="hljs-keyword">case</span> ((low, high), '<span class="hljs-type">B</span>') =&gt;
+      ((low + high + <span class="hljs-number">1</span>) / <span class="hljs-number">2</span>, high)
+    <span class="hljs-keyword">case</span> (_, _) =&gt; ???
+  }
+
+decodeRow(encodedRow)
+<span class="hljs-comment">// res12: (Int, Int) = (44, 44)</span>
+</code></pre>
+<p>Now the same for the column.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decodeCol</span></span>(encoded: <span class="hljs-type">String</span>) =
+  encoded.foldLeft((<span class="hljs-number">0</span>, <span class="hljs-number">7</span>)) {
+    <span class="hljs-keyword">case</span> ((low, high), '<span class="hljs-type">L</span>') =&gt;
+      (low, (low + high) / <span class="hljs-number">2</span>)
+    <span class="hljs-keyword">case</span> ((low, high), '<span class="hljs-type">R</span>') =&gt;
+      ((low + high + <span class="hljs-number">1</span>) / <span class="hljs-number">2</span>, high)
+    <span class="hljs-keyword">case</span> (_, _) =&gt; ???
+  }
+
+decodeCol(encodedCol)
+<span class="hljs-comment">// res13: (Int, Int) = (5, 5)</span>
+</code></pre>
+<p>Now put them all together, <code>row * 8 + col = seat</code>.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decodeSeat</span></span>(encoded: <span class="hljs-type">String</span>) = {
+  <span class="hljs-keyword">val</span> (encodedRow, encodedCol) = encoded.splitAt(<span class="hljs-number">7</span>)
+  decodeRow(encodedRow)._1 * <span class="hljs-number">8</span> + decodeCol(encodedCol)._1
+}
+</code></pre>
+<p>Test it against the examples.</p>
+<pre><code class="hljs css language-scala">decodeSeat(<span class="hljs-string">"BFFFBBFRRR"</span>)
+<span class="hljs-comment">// res14: Int = 567</span>
+decodeSeat(<span class="hljs-string">"FFFBBBFRRR"</span>)
+<span class="hljs-comment">// res15: Int = 119</span>
+decodeSeat(<span class="hljs-string">"BBFFBBFRLL"</span>)
+<span class="hljs-comment">// res16: Int = 820</span>
+</code></pre>
+<p>We want to decode each row of the input, and then get the maximum value.</p>
+<pre><code class="hljs css language-scala">input5.split(<span class="hljs-string">"\n"</span>).map(decodeSeat).max
+<span class="hljs-comment">// res17: Int = 818</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="part-2-4"></a><a href="#part-2-4" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Part 2</h3>
+<p>Now look for a discontinuity in the seats. This can be done by sorting the seat ids, calc the difference
+between sequential elements. If the difference isn't 1, we've found the discontinuity.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> seatIds = input5.split(<span class="hljs-string">"\n"</span>).map(decodeSeat).sorted.toList
+</code></pre>
+<pre><code class="hljs css language-scala">seatIds.sliding(<span class="hljs-number">2</span>).collectFirst {
+  <span class="hljs-keyword">case</span> x :: y :: <span class="hljs-type">Nil</span> <span class="hljs-keyword">if</span> (y - x) != <span class="hljs-number">1</span> =&gt; (x, y)
+}
+<span class="hljs-comment">// res18: Option[(Int, Int)] = Some(value = (558, 560))</span>
+</code></pre>
+<p>So our seat is between 558 and 560, must be 559!</p>
+</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#problem-1">Problem 1</a><ul class="toc-headings"><li><a href="#part-1">Part 1</a></li><li><a href="#part-2">Part 2</a></li></ul></li><li><a href="#problem-2">Problem 2</a><ul class="toc-headings"><li><a href="#part-1-1">Part 1</a></li><li><a href="#part-2-1">Part 2</a></li></ul></li><li><a href="#problem-3">Problem 3</a><ul class="toc-headings"><li><a href="#part-1-2">Part 1</a></li><li><a href="#part-2-2">Part 2</a></li></ul></li><li><a href="#problem-4">Problem 4</a><ul class="toc-headings"><li><a href="#part-1-3">Part 1</a></li><li><a href="#part-2-3">Part 2</a></li></ul></li><li><a href="#problem-5">Problem 5</a><ul class="toc-headings"><li><a href="#part-1-4">Part 1</a></li><li><a href="#part-2-4">Part 2</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"></a><div><h5>Projects</h5><a href="https://github.com/slakah/uritemplate4s" target="_blank" rel="noreferrer noopener">uritemplate4s</a></div><div><h5>More</h5><a href="/blog">Blog</a><a href="/talks">Talks</a><a href="https://github.com/slakah">GitHub</a><a class="github-button" href="https://github.com/slakah" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/JRCCollier" class="twitter-follow-button">Follow @JRCCollier</a></div></div></section><section class="copyright">Copyright © 2020 James Collier</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
