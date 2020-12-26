@@ -850,4 +850,72 @@ acc +6""")
 <span class="hljs-comment">// res29: Option[Int] = Some(value = 1976)</span>
 </code></pre>
 <p>That's the answer!</p>
-</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#problem-1">Problem 1</a><ul class="toc-headings"><li><a href="#part-1">Part 1</a></li><li><a href="#part-2">Part 2</a></li></ul></li><li><a href="#problem-2">Problem 2</a><ul class="toc-headings"><li><a href="#part-1-1">Part 1</a></li><li><a href="#part-2-1">Part 2</a></li></ul></li><li><a href="#problem-3">Problem 3</a><ul class="toc-headings"><li><a href="#part-1-2">Part 1</a></li><li><a href="#part-2-2">Part 2</a></li></ul></li><li><a href="#problem-4">Problem 4</a><ul class="toc-headings"><li><a href="#part-1-3">Part 1</a></li><li><a href="#part-2-3">Part 2</a></li></ul></li><li><a href="#problem-5">Problem 5</a><ul class="toc-headings"><li><a href="#part-1-4">Part 1</a></li><li><a href="#part-2-4">Part 2</a></li></ul></li><li><a href="#problem-6">Problem 6</a><ul class="toc-headings"><li><a href="#part-1-5">Part 1</a></li><li><a href="#part-2-5">Part 2</a></li></ul></li><li><a href="#problem-7">Problem 7</a><ul class="toc-headings"><li><a href="#part-1-6">Part 1</a></li><li><a href="#part-2-6">Part 2</a></li></ul></li><li><a href="#problem-8">Problem 8</a><ul class="toc-headings"><li><a href="#part-1-7">Part 1</a></li><li><a href="#part-2-7">Part 2</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"></a><div><h5>Projects</h5><a href="https://github.com/slakah/uritemplate4s" target="_blank" rel="noreferrer noopener">uritemplate4s</a></div><div><h5>More</h5><a href="/blog">Blog</a><a href="/talks">Talks</a><a href="https://github.com/slakah">GitHub</a><a class="github-button" href="https://github.com/slakah" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/JRCCollier" class="twitter-follow-button">Follow @JRCCollier</a></div></div></section><section class="copyright">Copyright © 2020 James Collier</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
+<h2><a class="anchor" aria-hidden="true" id="problem-9"></a><a href="#problem-9" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Problem 9</h2>
+<p><a href="https://adventofcode.com/2020/day/9">Problem link</a></p>
+<h3><a class="anchor" aria-hidden="true" id="part-1-8"></a><a href="#part-1-8" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Part 1</h3>
+<p>Reuse the <code>find2Addends</code> function from <a href="#problem-1">problem 1</a>.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find2Addends</span></span>(numbers: <span class="hljs-type">List</span>[<span class="hljs-type">Long</span>], target: <span class="hljs-type">Long</span>): <span class="hljs-type">Option</span>[(<span class="hljs-type">Long</span>, <span class="hljs-type">Long</span>)] = {
+  <span class="hljs-keyword">val</span> numSet = numbers.toSet
+  numbers.collectFirstSome { x =&gt;
+    <span class="hljs-keyword">val</span> y = target - x
+    <span class="hljs-keyword">if</span> (numSet(y)) <span class="hljs-type">Some</span>((x, y))
+    <span class="hljs-keyword">else</span> <span class="hljs-type">None</span>
+  }
+}
+</code></pre>
+<p>Parsing the input, you know the drill:</p>
+<pre><code class="hljs css language-scala">val nums = """35
+20
+15
+25
+47
+40
+62
+55
+65
+95
+102
+117
+150
+182
+127
+219
+299
+277
+309
+576"""
+  .split("\n")
+  .map(_.toLong)
+  .toList
+</code></pre>
+<p>I'm a fan of sliding windows for these kinds of problems, basically you want a row of each number you want to test
+as well as the preceding 5 numbers. So a sliding window of 6 works perfectly.</p>
+<pre><code class="hljs css language-scala">nums
+  <span class="hljs-comment">// keep the number we want to test + previous 5</span>
+  .sliding(<span class="hljs-number">6</span>)
+  <span class="hljs-comment">// reverse the sliding window, making pattern matching easier</span>
+  <span class="hljs-comment">// head will be the number you want to test</span>
+  .map(_.reverse)
+  .toList
+  .tail <span class="hljs-comment">// don't process the preamble</span>
+  .collectFirstSome {
+    <span class="hljs-keyword">case</span> head :: xs <span class="hljs-keyword">if</span> (find2Addends(xs, head).isEmpty) =&gt;
+      <span class="hljs-type">Some</span>(head)
+    <span class="hljs-keyword">case</span> _ =&gt; <span class="hljs-type">None</span>
+  }
+<span class="hljs-comment">// res30: Option[Long] = Some(value = 127L)</span>
+</code></pre>
+<p>Awesome, let's go ahead and run on the input with a sliding window of 1 + 25:</p>
+<pre><code class="hljs css language-scala">input9
+  .sliding(<span class="hljs-number">26</span>)
+  .map(_.reverse)
+  .toList
+  .tail <span class="hljs-comment">// don't process the preamble</span>
+  .collectFirstSome {
+    <span class="hljs-keyword">case</span> head :: xs <span class="hljs-keyword">if</span> (find2Addends(xs, head).isEmpty) =&gt;
+      <span class="hljs-type">Some</span>(head)
+    <span class="hljs-keyword">case</span> _ =&gt; <span class="hljs-type">None</span>
+  }
+<span class="hljs-comment">// res31: Option[Long] = Some(value = 36845998L)</span>
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#problem-1">Problem 1</a><ul class="toc-headings"><li><a href="#part-1">Part 1</a></li><li><a href="#part-2">Part 2</a></li></ul></li><li><a href="#problem-2">Problem 2</a><ul class="toc-headings"><li><a href="#part-1-1">Part 1</a></li><li><a href="#part-2-1">Part 2</a></li></ul></li><li><a href="#problem-3">Problem 3</a><ul class="toc-headings"><li><a href="#part-1-2">Part 1</a></li><li><a href="#part-2-2">Part 2</a></li></ul></li><li><a href="#problem-4">Problem 4</a><ul class="toc-headings"><li><a href="#part-1-3">Part 1</a></li><li><a href="#part-2-3">Part 2</a></li></ul></li><li><a href="#problem-5">Problem 5</a><ul class="toc-headings"><li><a href="#part-1-4">Part 1</a></li><li><a href="#part-2-4">Part 2</a></li></ul></li><li><a href="#problem-6">Problem 6</a><ul class="toc-headings"><li><a href="#part-1-5">Part 1</a></li><li><a href="#part-2-5">Part 2</a></li></ul></li><li><a href="#problem-7">Problem 7</a><ul class="toc-headings"><li><a href="#part-1-6">Part 1</a></li><li><a href="#part-2-6">Part 2</a></li></ul></li><li><a href="#problem-8">Problem 8</a><ul class="toc-headings"><li><a href="#part-1-7">Part 1</a></li><li><a href="#part-2-7">Part 2</a></li></ul></li><li><a href="#problem-9">Problem 9</a><ul class="toc-headings"><li><a href="#part-1-8">Part 1</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"></a><div><h5>Projects</h5><a href="https://github.com/slakah/uritemplate4s" target="_blank" rel="noreferrer noopener">uritemplate4s</a></div><div><h5>More</h5><a href="/blog">Blog</a><a href="/talks">Talks</a><a href="https://github.com/slakah">GitHub</a><a class="github-button" href="https://github.com/slakah" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/JRCCollier" class="twitter-follow-button">Follow @JRCCollier</a></div></div></section><section class="copyright">Copyright © 2020 James Collier</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
