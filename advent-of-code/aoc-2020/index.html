@@ -918,4 +918,39 @@ as well as the preceding 5 numbers. So a sliding window of 6 works perfectly.</p
   }
 <span class="hljs-comment">// res31: Option[Long] = Some(value = 36845998L)</span>
 </code></pre>
-</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#problem-1">Problem 1</a><ul class="toc-headings"><li><a href="#part-1">Part 1</a></li><li><a href="#part-2">Part 2</a></li></ul></li><li><a href="#problem-2">Problem 2</a><ul class="toc-headings"><li><a href="#part-1-1">Part 1</a></li><li><a href="#part-2-1">Part 2</a></li></ul></li><li><a href="#problem-3">Problem 3</a><ul class="toc-headings"><li><a href="#part-1-2">Part 1</a></li><li><a href="#part-2-2">Part 2</a></li></ul></li><li><a href="#problem-4">Problem 4</a><ul class="toc-headings"><li><a href="#part-1-3">Part 1</a></li><li><a href="#part-2-3">Part 2</a></li></ul></li><li><a href="#problem-5">Problem 5</a><ul class="toc-headings"><li><a href="#part-1-4">Part 1</a></li><li><a href="#part-2-4">Part 2</a></li></ul></li><li><a href="#problem-6">Problem 6</a><ul class="toc-headings"><li><a href="#part-1-5">Part 1</a></li><li><a href="#part-2-5">Part 2</a></li></ul></li><li><a href="#problem-7">Problem 7</a><ul class="toc-headings"><li><a href="#part-1-6">Part 1</a></li><li><a href="#part-2-6">Part 2</a></li></ul></li><li><a href="#problem-8">Problem 8</a><ul class="toc-headings"><li><a href="#part-1-7">Part 1</a></li><li><a href="#part-2-7">Part 2</a></li></ul></li><li><a href="#problem-9">Problem 9</a><ul class="toc-headings"><li><a href="#part-1-8">Part 1</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"></a><div><h5>Projects</h5><a href="https://github.com/slakah/uritemplate4s" target="_blank" rel="noreferrer noopener">uritemplate4s</a></div><div><h5>More</h5><a href="/blog">Blog</a><a href="/talks">Talks</a><a href="https://github.com/slakah">GitHub</a><a class="github-button" href="https://github.com/slakah" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/JRCCollier" class="twitter-follow-button">Follow @JRCCollier</a></div></div></section><section class="copyright">Copyright © 2020 James Collier</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
+<h3><a class="anchor" aria-hidden="true" id="part-2-8"></a><a href="#part-2-8" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Part 2</h3>
+<p>Let's just go ahead and brute force this. The possible size of subsets of the input will be
+2 to the size of the input. Incrementally increase the size of the sliding windows on the input
+until one of the windows sums up to the result of the previous answer <code>36845998</code>.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> <span class="hljs-type">Some</span>(list) = (<span class="hljs-number">2</span> to input9.size).toList.collectFirstSome { lSize =&gt;
+  input9.sliding(lSize).toList.collectFirstSome { list =&gt;
+    <span class="hljs-keyword">if</span> (list.sum === <span class="hljs-number">36845998</span>L) <span class="hljs-type">Some</span>(list)
+    <span class="hljs-keyword">else</span> <span class="hljs-type">None</span>
+  }
+}
+<span class="hljs-comment">// list: List[Long] = List(</span>
+<span class="hljs-comment">//   1443202L,</span>
+<span class="hljs-comment">//   1886894L,</span>
+<span class="hljs-comment">//   1622596L,</span>
+<span class="hljs-comment">//   1628710L,</span>
+<span class="hljs-comment">//   1683212L,</span>
+<span class="hljs-comment">//   2054839L,</span>
+<span class="hljs-comment">//   1793533L,</span>
+<span class="hljs-comment">//   1848035L,</span>
+<span class="hljs-comment">//   1955257L,</span>
+<span class="hljs-comment">//   2517933L,</span>
+<span class="hljs-comment">//   2031865L,</span>
+<span class="hljs-comment">//   2948974L,</span>
+<span class="hljs-comment">//   2101735L,</span>
+<span class="hljs-comment">//   2946745L,</span>
+<span class="hljs-comment">//   2455659L,</span>
+<span class="hljs-comment">//   2539785L,</span>
+<span class="hljs-comment">//   3387024L</span>
+<span class="hljs-comment">// )</span>
+</code></pre>
+<p>Now add the min and max of the list.</p>
+<pre><code class="hljs css language-scala">list.min + list.max
+<span class="hljs-comment">// res32: Long = 4830226L</span>
+</code></pre>
+<p>🎉</p>
+</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#problem-1">Problem 1</a><ul class="toc-headings"><li><a href="#part-1">Part 1</a></li><li><a href="#part-2">Part 2</a></li></ul></li><li><a href="#problem-2">Problem 2</a><ul class="toc-headings"><li><a href="#part-1-1">Part 1</a></li><li><a href="#part-2-1">Part 2</a></li></ul></li><li><a href="#problem-3">Problem 3</a><ul class="toc-headings"><li><a href="#part-1-2">Part 1</a></li><li><a href="#part-2-2">Part 2</a></li></ul></li><li><a href="#problem-4">Problem 4</a><ul class="toc-headings"><li><a href="#part-1-3">Part 1</a></li><li><a href="#part-2-3">Part 2</a></li></ul></li><li><a href="#problem-5">Problem 5</a><ul class="toc-headings"><li><a href="#part-1-4">Part 1</a></li><li><a href="#part-2-4">Part 2</a></li></ul></li><li><a href="#problem-6">Problem 6</a><ul class="toc-headings"><li><a href="#part-1-5">Part 1</a></li><li><a href="#part-2-5">Part 2</a></li></ul></li><li><a href="#problem-7">Problem 7</a><ul class="toc-headings"><li><a href="#part-1-6">Part 1</a></li><li><a href="#part-2-6">Part 2</a></li></ul></li><li><a href="#problem-8">Problem 8</a><ul class="toc-headings"><li><a href="#part-1-7">Part 1</a></li><li><a href="#part-2-7">Part 2</a></li></ul></li><li><a href="#problem-9">Problem 9</a><ul class="toc-headings"><li><a href="#part-1-8">Part 1</a></li><li><a href="#part-2-8">Part 2</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"></a><div><h5>Projects</h5><a href="https://github.com/slakah/uritemplate4s" target="_blank" rel="noreferrer noopener">uritemplate4s</a></div><div><h5>More</h5><a href="/blog">Blog</a><a href="/talks">Talks</a><a href="https://github.com/slakah">GitHub</a><a class="github-button" href="https://github.com/slakah" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/JRCCollier" class="twitter-follow-button">Follow @JRCCollier</a></div></div></section><section class="copyright">Copyright © 2020 James Collier</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
