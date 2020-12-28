@@ -953,4 +953,116 @@ until one of the windows sums up to the result of the previous answer <code>3684
 <span class="hljs-comment">// res32: Long = 4830226L</span>
 </code></pre>
 <p>🎉</p>
-</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#problem-1">Problem 1</a><ul class="toc-headings"><li><a href="#part-1">Part 1</a></li><li><a href="#part-2">Part 2</a></li></ul></li><li><a href="#problem-2">Problem 2</a><ul class="toc-headings"><li><a href="#part-1-1">Part 1</a></li><li><a href="#part-2-1">Part 2</a></li></ul></li><li><a href="#problem-3">Problem 3</a><ul class="toc-headings"><li><a href="#part-1-2">Part 1</a></li><li><a href="#part-2-2">Part 2</a></li></ul></li><li><a href="#problem-4">Problem 4</a><ul class="toc-headings"><li><a href="#part-1-3">Part 1</a></li><li><a href="#part-2-3">Part 2</a></li></ul></li><li><a href="#problem-5">Problem 5</a><ul class="toc-headings"><li><a href="#part-1-4">Part 1</a></li><li><a href="#part-2-4">Part 2</a></li></ul></li><li><a href="#problem-6">Problem 6</a><ul class="toc-headings"><li><a href="#part-1-5">Part 1</a></li><li><a href="#part-2-5">Part 2</a></li></ul></li><li><a href="#problem-7">Problem 7</a><ul class="toc-headings"><li><a href="#part-1-6">Part 1</a></li><li><a href="#part-2-6">Part 2</a></li></ul></li><li><a href="#problem-8">Problem 8</a><ul class="toc-headings"><li><a href="#part-1-7">Part 1</a></li><li><a href="#part-2-7">Part 2</a></li></ul></li><li><a href="#problem-9">Problem 9</a><ul class="toc-headings"><li><a href="#part-1-8">Part 1</a></li><li><a href="#part-2-8">Part 2</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"></a><div><h5>Projects</h5><a href="https://github.com/slakah/uritemplate4s" target="_blank" rel="noreferrer noopener">uritemplate4s</a></div><div><h5>More</h5><a href="/blog">Blog</a><a href="/talks">Talks</a><a href="https://github.com/slakah">GitHub</a><a class="github-button" href="https://github.com/slakah" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/JRCCollier" class="twitter-follow-button">Follow @JRCCollier</a></div></div></section><section class="copyright">Copyright © 2020 James Collier</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
+<h2><a class="anchor" aria-hidden="true" id="problem-10"></a><a href="#problem-10" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Problem 10</h2>
+<p><a href="https://adventofcode.com/2020/day/10">Problem link</a></p>
+<h3><a class="anchor" aria-hidden="true" id="part-1-9"></a><a href="#part-1-9" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Part 1</h3>
+<p>Parse the example as a set, with an additional entry which is the max of the example + 3 jolts.</p>
+<pre><code class="hljs css language-scala">val exampleAdapters = """28
+33
+18
+42
+31
+14
+46
+20
+48
+47
+24
+23
+49
+45
+19
+38
+39
+11
+1
+32
+25
+35
+8
+17
+7
+9
+4
+2
+34
+10
+3"""
+  .split("\n")
+  .map(_.toInt)
+  .toSet
+</code></pre>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> adapters = exampleAdapters + (exampleAdapters.max + <span class="hljs-number">3</span>)
+</code></pre>
+<p>Lookup the joltages in the set, preferring the lowest joltage increment. Recursively incrementing the joltage, till it reaches the maxJoltage of the adapters.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> maxJoltage = adapters.max
+<span class="hljs-comment">// maxJoltage: Int = 52</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">countDifferences</span></span>(adapters: <span class="hljs-type">Set</span>[<span class="hljs-type">Int</span>]): <span class="hljs-type">List</span>[<span class="hljs-type">Int</span>] = {
+  <span class="hljs-keyword">val</span> maxJoltage = adapters.max
+  <span class="hljs-meta">@tailrec</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">loop</span></span>(joltage: <span class="hljs-type">Int</span>, acc: <span class="hljs-type">List</span>[<span class="hljs-type">Int</span>]): <span class="hljs-type">List</span>[<span class="hljs-type">Int</span>] = {
+    <span class="hljs-keyword">if</span> (joltage === maxJoltage) acc
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (adapters(joltage + <span class="hljs-number">1</span>)) loop(joltage + <span class="hljs-number">1</span>, <span class="hljs-number">1</span> :: acc)
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (adapters(joltage + <span class="hljs-number">2</span>)) loop(joltage + <span class="hljs-number">2</span>, <span class="hljs-number">2</span> :: acc)
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (adapters(joltage + <span class="hljs-number">3</span>)) loop(joltage + <span class="hljs-number">3</span>, <span class="hljs-number">3</span> :: acc)
+    <span class="hljs-keyword">else</span> ???
+  }
+  loop(<span class="hljs-number">0</span>, <span class="hljs-type">Nil</span>)
+}
+
+countDifferences(adapters)
+<span class="hljs-comment">// res33: List[Int] = List(</span>
+<span class="hljs-comment">//   3,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   3,</span>
+<span class="hljs-comment">//   3,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   3,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   3,</span>
+<span class="hljs-comment">//   3,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   3,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   3,</span>
+<span class="hljs-comment">//   3,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   3,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   1,</span>
+<span class="hljs-comment">//   1</span>
+<span class="hljs-comment">// )</span>
+</code></pre>
+<p>Count the number of joltage steps for each joltage increment.</p>
+<pre><code class="hljs css language-scala">countDifferences(adapters)
+  .groupBy(identity) <span class="hljs-comment">// group by the joltage step</span>
+  .view.mapValues(_.size) <span class="hljs-comment">// count the number of joltage steps</span>
+<span class="hljs-comment">// res34: collection.MapView[Int, Int] = MapView((1, 22), (3, 10))</span>
+</code></pre>
+<p>So we have 22 of 1 joltage steps, and 10 of 3 joltage steps. Which matches what was specified for the example. Now for the real input, we'll ignore the extra max + 3 joltage adapter this time, and just remember to count an extra 3 joltage step at the end.</p>
+<pre><code class="hljs css language-scala">countDifferences(input10)
+  .groupBy(identity)
+  .view.mapValues(_.size)
+<span class="hljs-comment">// res35: collection.MapView[Int, Int] = MapView((1, 71), (3, 26))</span>
+</code></pre>
+<p>So 25 of 1 joltages steps, and 10 of the 3 joltage steps (remmeber add 1 for the adapter we choose to miss out).</p>
+<p>Times them together for the correct answer.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-number">71</span> * <span class="hljs-number">27</span>
+<span class="hljs-comment">// res36: Int = 1917</span>
+</code></pre>
+<p>Cool, we have the correct answer.</p>
+<p>A simpler solution is available by sorting the array, and counting the difference between each step.</p>
+</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#problem-1">Problem 1</a><ul class="toc-headings"><li><a href="#part-1">Part 1</a></li><li><a href="#part-2">Part 2</a></li></ul></li><li><a href="#problem-2">Problem 2</a><ul class="toc-headings"><li><a href="#part-1-1">Part 1</a></li><li><a href="#part-2-1">Part 2</a></li></ul></li><li><a href="#problem-3">Problem 3</a><ul class="toc-headings"><li><a href="#part-1-2">Part 1</a></li><li><a href="#part-2-2">Part 2</a></li></ul></li><li><a href="#problem-4">Problem 4</a><ul class="toc-headings"><li><a href="#part-1-3">Part 1</a></li><li><a href="#part-2-3">Part 2</a></li></ul></li><li><a href="#problem-5">Problem 5</a><ul class="toc-headings"><li><a href="#part-1-4">Part 1</a></li><li><a href="#part-2-4">Part 2</a></li></ul></li><li><a href="#problem-6">Problem 6</a><ul class="toc-headings"><li><a href="#part-1-5">Part 1</a></li><li><a href="#part-2-5">Part 2</a></li></ul></li><li><a href="#problem-7">Problem 7</a><ul class="toc-headings"><li><a href="#part-1-6">Part 1</a></li><li><a href="#part-2-6">Part 2</a></li></ul></li><li><a href="#problem-8">Problem 8</a><ul class="toc-headings"><li><a href="#part-1-7">Part 1</a></li><li><a href="#part-2-7">Part 2</a></li></ul></li><li><a href="#problem-9">Problem 9</a><ul class="toc-headings"><li><a href="#part-1-8">Part 1</a></li><li><a href="#part-2-8">Part 2</a></li></ul></li><li><a href="#problem-10">Problem 10</a><ul class="toc-headings"><li><a href="#part-1-9">Part 1</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"></a><div><h5>Projects</h5><a href="https://github.com/slakah/uritemplate4s" target="_blank" rel="noreferrer noopener">uritemplate4s</a></div><div><h5>More</h5><a href="/blog">Blog</a><a href="/talks">Talks</a><a href="https://github.com/slakah">GitHub</a><a class="github-button" href="https://github.com/slakah" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/JRCCollier" class="twitter-follow-button">Follow @JRCCollier</a></div></div></section><section class="copyright">Copyright © 2020 James Collier</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>

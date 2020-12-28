@@ -427,7 +427,7 @@ assert(newRule(digits(<span class="hljs-number">111111</span>)) == <span class="
         <span class="hljs-keyword">if</span> (resolveArg(memory, arg1, param1) == resolveArg(memory, arg2, param2)) <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>
       )
       runLoop(newMemory, pointer + <span class="hljs-number">4</span>, inputs, outputs)
-    <span class="hljs-keyword">case</span> <span class="hljs-type">None</span> =&gt;
+    <span class="hljs-keyword">case</span> _ =&gt;
       <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">IllegalStateException</span>(<span class="hljs-string">s"Unexpected instruction supplied <span class="hljs-subst">${instructionList.mkString(",")}</span> (<span class="hljs-subst">$pointer</span>)"</span>)
   }
 }
