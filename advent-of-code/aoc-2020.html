@@ -1058,7 +1058,7 @@ countDifferences(adapters)
   .view.mapValues(_.size)
 <span class="hljs-comment">// res35: collection.MapView[Int, Int] = MapView((1, 71), (3, 26))</span>
 </code></pre>
-<p>So 25 of 1 joltages steps, and 10 of the 3 joltage steps (remmeber add 1 for the adapter we choose to miss out).</p>
+<p>So 71 of 1 joltages steps, and 26 of the 3 joltage steps (remember to add 1 for the adapter we choose to miss out).</p>
 <p>Times them together for the correct answer.</p>
 <pre><code class="hljs css language-scala"><span class="hljs-number">71</span> * <span class="hljs-number">27</span>
 <span class="hljs-comment">// res36: Int = 1917</span>
@@ -1067,7 +1067,7 @@ countDifferences(adapters)
 <p>A simpler solution is available by sorting the array, and counting the difference between each step.</p>
 <h3><a class="anchor" aria-hidden="true" id="part-2-9"></a><a href="#part-2-9" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Part 2</h3>
 <p>For part 2, we need to count the total number of unique paths from 0 to the maximum joltage.</p>
-<p>One way to solve this is to count the paths from 0 to a each adapter joltage. <code>insert image later</code></p>
+<p>One way to solve this is to count the paths from 0 to a each adapter joltage.</p>
 <pre><code class="hljs css language-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">countPaths</span></span>(adapters: <span class="hljs-type">List</span>[<span class="hljs-type">Int</span>]): <span class="hljs-type">Long</span> = {
   <span class="hljs-keyword">val</span> counts = adapters.foldLeft(<span class="hljs-type">Map</span>[<span class="hljs-type">Int</span>, <span class="hljs-type">Long</span>](<span class="hljs-number">0</span> -&gt; <span class="hljs-number">1</span>L)) {
     <span class="hljs-keyword">case</span> (acc, joltage) =&gt;
