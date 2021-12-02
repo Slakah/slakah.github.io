@@ -1,4 +1,4 @@
-ThisBuild / scalaVersion := "2.13.4"
+ThisBuild / scalaVersion := "2.13.7"
 
 lazy val root = project
   .in(file("."))
@@ -11,8 +11,8 @@ lazy val docs = project
     moduleName := "site-docs",
     mdocExtraArguments += "--no-link-hygiene",
     libraryDependencies ++= Seq(
-      "org.typelevel" %% "cats-core" % "2.3.1",
-      "org.typelevel" %% "cats-parse" % "0.3.6"
+      "org.typelevel" %% "cats-core" % "2.7.0",
+      "org.typelevel" %% "cats-parse" % "0.3.1"
     ),
     watchSources += baseDirectory.in(ThisBuild).value / "docs"
   )
