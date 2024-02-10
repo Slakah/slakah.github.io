@@ -14,7 +14,8 @@ jobs:
         node-version: '12.x'
     - uses: actions/setup-java@v4
       with:
-        java-version: 8
+        distribution: 'temurin'
+        java-version: '11'
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: '3.1'
