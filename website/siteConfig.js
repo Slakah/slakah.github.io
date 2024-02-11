@@ -6,7 +6,6 @@ const repoUrl = 'https://github.com/slakah'
 const siteConfig = {
   title: 'Gubbns', // Title for your website.
   tagline: 'Stuff to share',
-  twitterUsername: 'JRCCollier',
   url: 'https://gubbns.com', // Your website URL
   baseUrl: '/', // Base URL for your project */
   docsUrl: '',
