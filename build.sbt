@@ -12,7 +12,7 @@ lazy val docs = project
     mdocExtraArguments += "--no-link-hygiene",
     libraryDependencies ++= Seq(
       "org.typelevel" %% "cats-core" % "2.10.0",
-      "org.typelevel" %% "cats-parse" % "0.3.10"
+      "org.typelevel" %% "cats-parse" % "1.0.0"
     ),
     watchSources += baseDirectory.in(ThisBuild).value / "docs"
   )
