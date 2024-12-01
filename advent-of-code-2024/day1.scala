@@ -1,14 +1,11 @@
 import $ivy.`com.lihaoyi::os-lib:0.9.2`
-import $ivy.`org.typelevel::cats-core:2.9.0`
+import $ivy.`org.typelevel::cats-core:2.12.0`
 import cats._
 import cats.data._
 import cats.syntax.all._
 
 val data = os.read.lines(os.pwd / "data" / "day1.dat")
-
-def column(i: Int) = data.map(_.split("\\s+")(i).toLong).toList
-val lefts = column(0)
-val rights = column(1)
+val List(lefts, rights) = data.toList.map(_.split("\\s+").map(_.toLong)).transpose
 println("Answer 1: " + lefts.sorted.zip(rights.sorted)
   .map { case (left, right) => (left - right).abs }
   .sum
