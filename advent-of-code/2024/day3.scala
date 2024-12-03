@@ -6,6 +6,21 @@ import cats.syntax.all._
 
 val data = os.read.lines(os.pwd / "data" / "day3.dat")
 val mulRegex = """mul\((\d{1,3}),(\d{1,3})\)""".r
-println("Answer 1: " + data.flatMap(line => mulRegex.findAllIn(line).map {
-  case mulRegex(x, y) => x.toInt * y.toInt
-}).sum)
+println("Answer 1: " + data
+  .flatMap(line => mulRegex.findAllIn(line))
+  .map { case mulRegex(x, y) => x.toInt * y.toInt }
+  .sum
+)
+
+val opRegex = """(do|don\'t|mul)\(([^\)]*)\)""".r
+val mulArgRegex = """(\d{1,3}),(\d{1,3})""".r
+println("Answer 2: " + data
+  .flatMap(line => opRegex.findAllIn(line))
+  .foldLeft((true, 0)) { case ((enabled, sum), opMatch) => opMatch match {
+    case opRegex("mul", mulArgRegex(x, y)) => if (enabled) (enabled, sum + x.toInt * y.toInt) else (enabled, sum)
+    case opRegex("mul", _) => (enabled, sum)
+    case opRegex("do", "") => (true, sum)
+    case opRegex("don't", "") => (false, sum)
+  }}
+  ._2
+)
