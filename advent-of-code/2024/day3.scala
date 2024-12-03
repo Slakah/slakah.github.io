@@ -12,12 +12,12 @@ println("Answer 1: " + data
   .sum
 )
 
-val opRegex = """(do|don\'t|mul)\(([^\)]*)\)""".r
+val opRegex = """(do|don\'t|mul)\(([\d,]*)\)""".r
 val mulArgRegex = """(\d{1,3}),(\d{1,3})""".r
 println("Answer 2: " + data
   .flatMap(line => opRegex.findAllIn(line))
   .foldLeft((true, 0)) { case ((enabled, sum), opMatch) => opMatch match {
-    case opRegex("mul", mulArgRegex(x, y)) => if (enabled) (enabled, sum + x.toInt * y.toInt) else (enabled, sum)
+    case opRegex("mul", mulArgRegex(x, y)) if enabled => (enabled, sum + x.toInt * y.toInt)
     case opRegex("mul", _) => (enabled, sum)
     case opRegex("do", "") => (true, sum)
     case opRegex("don't", "") => (false, sum)
