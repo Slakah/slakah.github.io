@@ -15,7 +15,7 @@ val compassPoints = for
   row <- -1 to 1
   if ((column, row) != (0, 0))
 yield (column, row)
-println("Answer 2: " + grid.map {
+println("Answer 1: " + grid.map {
   case ((column, row), 'X') =>
     compassPoints.count((x, y) =>
       word.tail.zipWithIndex.map((c, i) => (c, i + 1)).forall((c, i) =>
@@ -24,3 +24,16 @@ println("Answer 2: " + grid.map {
     )
   case _ => 0
 }.sum)
+
+val ordinalPoints = List((1, 1), (1, -1), (-1, -1), (-1, 1))
+println("Answer 2: " + grid.count {
+  case ((column, row), 'A') =>
+    ordinalPoints.flatMap((x, y) => grid.get((column + x), (row + y))) match {
+      case List('M', 'M', 'S', 'S') => true
+      case List('S', 'M', 'M', 'S') => true
+      case List('S', 'S', 'M', 'M') => true
+      case List('M', 'S', 'S', 'M') => true
+      case _ => false
+    }
+  case _ => false
+})
