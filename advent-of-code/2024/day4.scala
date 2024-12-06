@@ -18,7 +18,7 @@ yield (column, row)
 println("Answer 1: " + grid.map {
   case ((column, row), 'X') =>
     compassPoints.count((x, y) =>
-      word.tail.zipWithIndex.map((c, i) => (c, i + 1)).forall((c, i) =>
+      word.zipWithIndex.tail.forall((c, i) =>
         grid.get((column + (i * x), row + (i * y))) == Some(c)
       )
     )
