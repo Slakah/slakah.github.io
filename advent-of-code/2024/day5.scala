@@ -10,4 +10,11 @@ val (section1, section2) = data.span(!_.isEmpty) match { case (s1, s2) => (
     s2.filter(!_.isEmpty).map(_.split(",").map(_.toInt).toList)
   )
 }
-println(section2)
+val orderingRules = section1.groupBy(_._1).view.mapValues(_.map(_._2).toList).toMap
+
+println(section2.map(_.zipWithIndex).filter { line =>
+  line.forall((x, i) => orderingRules.get(x).getOrElse(List.empty).forall(y => line.find(_._1 == y) match {
+    case Some((_, j)) => j > i
+    case None => true
+  }))
+}.map(line => line(line.length / 2)._1).sum)
