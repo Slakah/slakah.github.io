@@ -12,6 +12,7 @@ val grid = (for
 yield ((x, y), cell))
 
 val (width, height) = (data.map(_.length).max, data.length)
+val maxWidthHeight = List(width, height).max
 
 val freq2coords = grid.groupBy(_._2).view.mapValues(_.map(_._1).toList).toList
 
@@ -31,7 +32,9 @@ println("Answer 2: " + freq2coords.flatMap((freq, coords) =>
   coords.combinations(2).toList.flatMap {
     case (x1, y1) :: (x2, y2) :: Nil =>
       val (deltaX, deltaY) = (x2 - x1, y2 - y1)
-      (1 to List(height, width).max).flatMap(factor => List(((x1 - deltaX * factor), (y1 - deltaY * factor)), ((x2 + deltaX * factor), (y2 + deltaY * factor))))
+      // TODO: optimization to only generate on the grid
+      (-maxWidthHeight to maxWidthHeight)
+        .flatMap(factor => List(((x2 + deltaX * factor), (y2 + deltaY * factor))))
     case _ => ???
   })
   .distinct
