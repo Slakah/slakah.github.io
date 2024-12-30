@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "tsc && node dist/app.js",
-    "watch-debug": "tsc && concurrently \"tsc -w\" \"nodemon dist/app.js\"",
+    "start": "tsx src/app.ts",
+    "watch-start": "tsx --watch src/app.ts",
     "screenshot": "./bin/chromium-screenshot.sh http://localhost:3000 output.png",
-    "display-update": "npm run screenshot && poetry run python ./bin/display-update.py -i output.png"
+    "display-update": "npm run screenshot && poetry run python ./bin/image.py -i output.png"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,7 @@
     "express": "^4.21.2",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }
 }
