@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsx src/app.ts",
-    "watch-start": "tsx --watch src/app.ts",
+    "start": "tsx src/server.ts",
+    "watch-start": "tsx --watch src/server.ts",
     "screenshot": "./bin/chromium-screenshot.sh http://localhost:3000 output.png",
     "display-update": "npm run screenshot && poetry run python ./bin/image.py -i output.png"
   },
