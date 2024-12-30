@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Today's Date</title>
+  <style>
+    body {
+      width: 400px;
+      height: 300px;
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Prevent scrolling if content exceeds size */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      border: 1px solid #000; /* Optional: Visual border for clarity */
+      box-sizing: border-box; /* Ensure padding/border doesn't exceed 400x300 */
+    }
+    #date {
+      font-size: 32px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <p id="date"></p>
+
+  <script>
+    // Get today's date
+    const today = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = today.toLocaleDateString(undefined, options);
+
+    // Display the date in the #date element
+    document.getElementById('date').textContent = formattedDate;
+  </script>
+</body>
+</html>
