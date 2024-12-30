@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "serve": "tsc && node dist/app.js",
-    "watch-debug": "tsc && concurrently \"tsc -w\" \"nodemon dist/app.js\""
+    "watch-debug": "tsc && concurrently \"tsc -w\" \"nodemon dist/app.js\"",
+    "screenshot": "./bin/chromium-screenshot.sh http://localhost:3000 output.png"
   },
   "keywords": [],
   "author": "",
