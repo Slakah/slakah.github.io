@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch-debug": "pnpm run copy-static-assets && tsc && concurrently \"tsc -w\" \"nodemon dist/app.js\"",
-    "copy-static-assets": "ts-node copyStaticAssets.ts"
+    "serve": "tsc && node dist/app.js",
+    "watch-debug": "tsc && concurrently \"tsc -w\" \"nodemon dist/app.js\""
   },
   "keywords": [],
   "author": "",
@@ -13,11 +13,9 @@
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.2",
-    "@types/shelljs": "^0.8.15",
     "concurrently": "^9.1.1",
     "express": "^4.21.2",
     "nodemon": "^3.1.9",
-    "shelljs": "^0.8.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   }
