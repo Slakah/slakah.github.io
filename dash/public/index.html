@@ -18,6 +18,10 @@
       border: 1px solid #000; /* Optional: Visual border for clarity */
       box-sizing: border-box; /* Ensure padding/border doesn't exceed 400x300 */
     }
+    #time {
+      font-size: 32px;
+      color: #333;
+    }
     #date {
       font-size: 32px;
       color: #333;
@@ -25,16 +29,19 @@
   </style>
 </head>
 <body>
-  <p id="date"></p>
+  <div>
+    <div id="time"></div>
+    <div id="date"></div>
+  </div>
 
   <script>
-    // Get today's date
-    const today = new Date();
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = today.toLocaleDateString(undefined, options);
+    const now = new Date();
+    const locale = 'en-GB';
+    const time = now.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', hour12: false});
+    const date = now.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
 
-    // Display the date in the #date element
-    document.getElementById('date').textContent = formattedDate;
+    document.getElementById('time').textContent = time;
+    document.getElementById('date').textContent = date;
   </script>
 </body>
 </html>

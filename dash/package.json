@@ -6,7 +6,8 @@
   "scripts": {
     "serve": "tsc && node dist/app.js",
     "watch-debug": "tsc && concurrently \"tsc -w\" \"nodemon dist/app.js\"",
-    "screenshot": "./bin/chromium-screenshot.sh http://localhost:3000 output.png"
+    "screenshot": "./bin/chromium-screenshot.sh http://localhost:3000 output.png",
+    "display-update": "npm run screenshot && poetry run python ./bin/display-update.py -i output.png"
   },
   "keywords": [],
   "author": "",
