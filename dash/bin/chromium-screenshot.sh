@@ -10,4 +10,9 @@ if [ "200" -ne "$response_status" ]; then
 fi
 
 echo "taking screenshot of $url to $output..."
-exec chromium-browser --headless --no-sandbox --disable-gpu --hide-scrollbars --screenshot=$output --window-size=400x300 $url
+if [[ "$(uname)" == "Darwin" ]]; then
+    readonly command="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+else
+    readonly command='chromium-browser'
+fi
+exec "$command" --headless --no-sandbox --disable-gpu --hide-scrollbars --screenshot=$output --window-size=400x300 $url

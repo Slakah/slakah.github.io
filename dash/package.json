@@ -1,25 +1,36 @@
 {
   "name": "dash",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "start": "tsx src/server.ts",
-    "watch-start": "tsx --watch src/server.ts",
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
     "screenshot": "./bin/chromium-screenshot.sh http://localhost:3000 output.png",
     "display-update": "npm run screenshot && poetry run python ./bin/image.py -i output.png"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/express": "^5.0.0",
-    "@types/node": "^22.10.2",
-    "concurrently": "^9.1.1",
+  "dependencies": {
     "express": "^4.21.2",
-    "nodemon": "^3.1.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/express": "^5.0.0",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "eslint": "^9.17.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "globals": "^15.14.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
+    "typescript": "~5.6.3",
+    "typescript-eslint": "^8.18.2",
+    "vite": "^6.0.5"
   }
 }
