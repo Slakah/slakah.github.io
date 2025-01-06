@@ -1,7 +1,8 @@
-
-.date {
-  font-size: 32px;
-}
 .time {
-  font-size: 32px;
+  font-weight: bold;
+  font-size: 102px;
+}
+.date {
+  font-weight: bold;
+  font-size: 42px;
 }

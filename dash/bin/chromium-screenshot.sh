@@ -15,4 +15,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
 else
     readonly command='chromium-browser'
 fi
-exec "$command" --headless --no-sandbox --disable-gpu --hide-scrollbars --screenshot=$output --window-size=400x300 $url
+exec "$command" --headless --no-sandbox --disable-gpu --mute-audio --hide-scrollbars \
+  --disable-extensions --disable-site-isolation-trials --disable-software-rasterizer \
+  --disable-threaded-animation --disable-threaded-scrolling --disable-background-timer-throttling \
+  --screenshot=$output --window-size=400x300 $url
