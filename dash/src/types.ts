@@ -1,5 +1,5 @@
 
 
 export interface APIResponse {
-  busTimes: {[key: string]: string};
+  transportTimes: Array<{label: string, times: Array<string>}>;
 };

@@ -1,5 +1,5 @@
 import { promises as fs } from "fs";
-import { APIResponse } from "./types";
+import { APIResponse } from "../types";
 import _ from 'lodash';
 
 const stopPointIDs = ['490015052S', '490015052N']
@@ -39,6 +39,10 @@ export async function fetchDataCached(): Promise<APIData> {
   }
 }
 
+function nowISO8601(): string {
+  return new Date().toISOString();
+}
+
 export async function api(): Promise<APIResponse> {
   const data = await fetchDataCached();
   
@@ -47,10 +51,16 @@ export async function api(): Promise<APIResponse> {
     minute: '2-digit',
   });
   return {
-    busTimes: _.mapValues(
+    transportTimes: Object.values(
       _.groupBy(data.stopPointArrivals, o => o.lineName),
-      a => a.map(({expectedArrival}) => expectedArrival).sort().map(readableDate).join(', ')
-    ),
+    ).map(data => ({
+      label: data[0].lineName,
+      times: data
+        .map(({expectedArrival}) => expectedArrival)
+        .sort()
+        .filter(d => d >= nowISO8601())
+        .map(readableDate)
+    }))
   };
 }
 
@@ -60,7 +70,13 @@ export async function readFromCache(): Promise<{updated: string, data: APIData} 
   } catch (err) {
     return null;
   }
-  return JSON.parse(await fs.readFile('cache.json', 'utf8'));
+  try {
+    return JSON.parse(await fs.readFile('cache.json', 'utf8'));
+  } catch (err) {
+    const message = (err as Error).message;
+    console.error(`error: reading cache.json: ${message}`);
+    return null;
+  }
 }
 
 export async function storeInCache(data: APIData): Promise<void> {

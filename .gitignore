@@ -19,6 +19,8 @@ website/static/talks/
 dist/
 logs
 
+output.png
+output.png.hash
 secrets.json
 env.json
 cache.json

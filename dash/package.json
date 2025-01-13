@@ -2,17 +2,15 @@
   "name": "dash",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "start": "tsx src/server.ts",
+    "start": "bin/server-run.sh",
     "dev": "vite",
     "dev-all": "concurrently -k \"vite\" \"tsx watch src/server.ts\"",
-    "store-all": "tsx src/store-all.js",
-    "build": "tsc -b && vite build",
+    "build": "vite build && tsc -p tsconfig.server.json",
     "lint": "eslint .",
     "preview": "vite preview",
-    "screenshot": "./bin/chromium-screenshot.sh http://localhost:3000 output.png",
-    "display-update": "npm run screenshot && poetry run python ./bin/image.py -i output.png"
+    "screenshot": "tsx src/command.ts screenshot output.png",
+    "display-update": "npm run screenshot && bin/display-update output.png"
   },
   "dependencies": {
     "concurrently": "^9.1.2",
@@ -34,6 +32,7 @@
     "eslint-plugin-react-refresh": "^0.4.16",
     "globals": "^15.14.0",
     "lodash": "^4.17.21",
+    "puppeteer-core": "^24.0.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "~5.6.3",
