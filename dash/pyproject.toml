@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "dash"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.32.3"
+fonts = "^0.0.3"
+font-source-sans-pro = "^0.0.1"
+font-source-serif-pro = "^0.0.1"
+font-fredoka-one = "^0.0.4"
+font-hanken-grotesk = "^0.0.2"
+font-intuitive = "^0.0.4"
+pillow = "^11.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
