@@ -61,6 +61,7 @@ export async function api(): Promise<APIResponse> {
         .filter(d => d >= nowISO8601())
         .map(readableDate)
     }))
+    .filter(o => o.times.length != 0)
   };
 }
 

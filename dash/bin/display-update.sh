@@ -9,7 +9,7 @@ readonly outputHash=$(sha256sum $output)
 if [ -f "$hashFile" ]; then
   readonly oldHash="$(cat $hashFile)"
   if [ "$outputHash" == "$oldHash" ]; then
-    echo "$output not chaneged, exiting"
+    echo "$output not changed, exiting"
     exit 0
   fi
 fi
