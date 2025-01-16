@@ -60,6 +60,7 @@ export async function api(): Promise<APIResponse> {
         .sort()
         .filter(d => d >= nowISO8601())
         .map(readableDate)
+        .slice(0, 3)
     }))
     .filter(o => o.times.length != 0)
   };
@@ -68,7 +69,7 @@ export async function api(): Promise<APIResponse> {
 export async function readFromCache(): Promise<{updated: string, data: APIData} | null> {
   try {
     await fs.access('cache.json');
-  } catch (err) {
+  } catch {
     return null;
   }
   try {

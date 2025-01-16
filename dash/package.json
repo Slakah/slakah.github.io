@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "bin/server-run.sh",
-    "dev": "vite",
-    "dev-all": "concurrently -k \"vite\" \"tsx watch src/server.ts\"",
+    "dev": "concurrently -k \"vite\" \"tsx watch src/server.ts\"",
     "build": "vite build && tsc -p tsconfig.server.json",
     "lint": "eslint .",
     "preview": "vite preview",

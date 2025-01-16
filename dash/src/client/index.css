@@ -1,6 +1,6 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  line-height: 1;
   font-weight: 400;
 
   font-synthesis: none;
@@ -25,8 +25,6 @@ body {
   padding: 0;
   overflow: hidden; /* Prevent scrolling if content exceeds size */
   display: flex;
-  align-items: center;
-  justify-content: center;
   font-family: Arial, sans-serif;
   border: 1px solid #000; /* Optional: Visual border for clarity */
   box-sizing: border-box; /* Ensure padding/border doesn't exceed 400x300 */
