@@ -13,7 +13,7 @@ export async function takeScreenshot(outputFile: string): Promise<void> {
     console.log('closing pages...');
     await Promise.all(pages.map(p => p.close()));    
     const page = await browser.newPage();
-    page.setDefaultTimeout(20_000);
+    page.setDefaultTimeout(30_000);
     console.log(`saving screenshot of ${url} to ${outputFile}...`)
     await page.goto(url);
     await page.waitForSelector('#loaded', {timeout: 20_000});

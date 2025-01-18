@@ -38,7 +38,10 @@ function App() {
           <div className='time'>{time}</div>
           <div className='date'>{date}</div>
         </div>
-        <div className='temperature'>{data?.weather.temperature}</div>
+        <div>
+          <div className='temperature'>{data?.weather.temperature}</div>
+          <div className='weather'>{data?.weather.weatherLabel}</div>
+        </div>
       </div>
       <hr />
       <div className='transport-container'>

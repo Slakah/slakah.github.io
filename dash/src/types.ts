@@ -5,5 +5,6 @@ export interface APIResponse {
   weather: {
     temperature: string,
     weatherCode: number,
+    weatherLabel: string,
   }
 };

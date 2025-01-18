@@ -1,6 +1,5 @@
 .top-container {
   display: flex;
-  /* flex-direction: row; */
   justify-content: space-between;
 }
 .time {
@@ -11,15 +10,18 @@
 .date {
   font-weight: bold;
   font-size: 52px;
-  margin-top: 0;
 }
 .temperature {
   font-weight: bold;
-  font-size: 72px;
-  margin-top: 0;
+  font-size: 62px;
+}
+.weather {
+  font-size: 80px;
+  filter: grayscale(100%);
+  text-shadow: 0px 0px 3px black;
 }
 .transport-container {
-  margin-top: 18px;
+  margin-top: 9px;
 }
 .transport-row {
   display: flex;
@@ -31,11 +33,9 @@
 .transport-label {
   font-weight: bold;
   font-size: 42px;
-  line-height: 100%;
 }
 .transport-times {
   font-weight: bold;
-  font-size: 34px;
-  line-height: 100%;
-  margin-left: 12px;
+  font-size: 36px;
+  margin-left: 8px;
 }

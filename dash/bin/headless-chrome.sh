@@ -1,7 +1,11 @@
 #!/bin/bash
 set -euo pipefail
 
-readonly url="$1"
+if [ $# -eq 0 ]; then
+  readonly url="http://localhost:3000"
+else
+  readonly url="$1"
+fi
 
 readonly response_status=$(curl -o /dev/null -s -w "%{http_code}" "$url")
 if [ "200" -ne "$response_status" ]; then
