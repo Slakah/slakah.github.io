@@ -35,8 +35,11 @@ async function execSafe(cmd: string): Promise<string> {
 }
 
 export async function adminServices(): Promise<string> {
-  const dashStatus = await execSafe('systemctl status dash');
-  const headlessChromeStatus = await execSafe('systemctl status headless-chrome');
+  const services = [{label: 'Dash', name: 'dash'}, {label: 'Headless Chrome', name: 'headless-chrome'}];
+  const rows = await Promise.all(services.map(async s => {
+    const status = await execSafe(`systemctl status ${s.name}`);
+    return {...s, status};
+  }))
   return `
     <html>
       <head>
@@ -44,10 +47,9 @@ export async function adminServices(): Promise<string> {
       </head>
       <body>
         <h1>Services</h1>
-        <h1>Dash</h1>
-        <div style="white-space: pre;">${dashStatus}</div>
-        <h1>Headless Chrome</h1>
-        <div style="white-space: pre;">${headlessChromeStatus}</div>
+        ${rows.map(({label, status}) => 
+          `<h2>${label}</h2><div style="white-space: pre;">${status}</div>`
+        ).join()}
       </body>
     </html>
   `;

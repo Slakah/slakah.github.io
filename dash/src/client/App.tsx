@@ -24,13 +24,21 @@ function App() {
   const time = now.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', hour12: false});
   const date = now.toLocaleDateString(locale, { month: 'short', day: 'numeric' });
   const loaded = data != null;
-  const transportTimes = (data?.transportTimes ?? []).map(({label, times}) => <><div className='transport-label'>{label}</div><div className='transport-times'>{times.join(', ')}</div></>);
+  const transportTimes = (data?.transportTimes ?? [])
+    .map(({label, times}) =>
+      <>
+        <div className='transport-label'>{label}</div>
+        <div className='transport-times'>{times.join(' ')}</div>
+      </>);
   return (
     <>
       {loaded ? <div id='loaded'></div> : null}
-      <div className='date-time'>
-        <div className='time'>{time}</div>
-        <div className='date'>{date}</div>
+      <div className='top-container'>
+        <div className='date-time'>
+          <div className='time'>{time}</div>
+          <div className='date'>{date}</div>
+        </div>
+        <div className='temperature'>{data?.weather.temperature}</div>
       </div>
       <hr />
       <div className='transport-container'>

@@ -31,6 +31,9 @@ app.use("/admin/files", express.static(projectDir));
 // Serve static files from the "public" directory
 app.use("/", express.static(path.join(__dirname, '../dist')));
 
+app.get("/api/raw", async (_req: Request, res: Response) => {
+  res.json(await fetchData());
+});
 app.get("/api/data", async (_req: Request, res: Response) => {
   res.json(await api());
 });
@@ -52,7 +55,7 @@ app.post("/api/cache", async (_req: Request, res: Response) => {
     res.json({status: 'ok'});
   } catch (err) {
     const message = (err as Error).message;
-    console.error(`error: ${message} when taking screenshot`);
+    console.error(`error: ${message} when updating cache`);
     res.status(400).json({status: 'bad', error: message});
   }
 });
