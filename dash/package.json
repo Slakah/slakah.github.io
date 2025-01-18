@@ -12,6 +12,7 @@
     "display-update": "npm run screenshot && bin/display-update output.png"
   },
   "dependencies": {
+    "@fontsource-variable/roboto-condensed": "^5.1.1",
     "@fontsource/roboto": "^5.1.1",
     "concurrently": "^9.1.2",
     "cors": "^2.8.5",

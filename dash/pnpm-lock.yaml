@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@fontsource-variable/roboto-condensed':
+        specifier: ^5.1.1
+        version: 5.1.1
       '@fontsource/roboto':
         specifier: ^5.1.1
         version: 5.1.1
@@ -418,6 +421,9 @@ packages:
   '@eslint/plugin-kit@0.2.4':
     resolution: {integrity: sha512-zSkKow6H5Kdm0ZUQUB2kV5JIXqoG0+uH5YADhaEHswm664N9Db8dXSi0nMJpacpMf+MyyglF1vnZohpEg5yUtg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@fontsource-variable/roboto-condensed@5.1.1':
+    resolution: {integrity: sha512-FCdzPL6zevODCQFOGY/tuo2SbJeIUq4bSlXdI3ttuDVetTm5sHUf0Ei9raMdMR1AE2IJFgoQEAbxXSz8zv1oiA==}
 
   '@fontsource/roboto@5.1.1':
     resolution: {integrity: sha512-XwVVXtERDQIM7HPUIbyDe0FP4SRovpjF7zMI8M7pbqFp3ahLJsJTd18h+E6pkar6UbV3btbwkKjYARr5M+SQow==}
@@ -2044,6 +2050,8 @@ snapshots:
   '@eslint/plugin-kit@0.2.4':
     dependencies:
       levn: 0.4.1
+
+  '@fontsource-variable/roboto-condensed@5.1.1': {}
 
   '@fontsource/roboto@5.1.1': {}
 

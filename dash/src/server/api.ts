@@ -86,7 +86,7 @@ export async function api(): Promise<APIResponse> {
     weather: {
       temperature: `${Math.round(temperature_2m)}°C`,
       weatherCode: weather_code,
-      weatherLabel: wmoCode(weather_code, is_day == 1).value,
+      weatherLabel: wmoCode(weather_code, is_day == 1).description,
     },
   };
 }

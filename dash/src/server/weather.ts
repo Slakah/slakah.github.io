@@ -60,12 +60,12 @@ export function wmoCode(weatherCode: number, daylight: boolean): { value: string
       };
     case 3:
       if (daylight) {
-        return { value: "🌥️", originalNumericCode: 3, description: "Overcast" };
+        return { value: "🌥️", originalNumericCode: 3, description: "Cloudy" };
       } else {
         return {
           value: "☁️🌙",
           originalNumericCode: 3,
-          description: "Overcast",
+          description: "Cloudy",
         };
       }
     case 45:
