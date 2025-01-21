@@ -1,5 +1,5 @@
 import $ivy.`com.lihaoyi::os-lib:0.9.2`
-import $ivy.`org.typelevel::cats-core:2.12.0`
+import $ivy.`org.typelevel::cats-core:2.13.0`
 import cats._
 import cats.data._
 import cats.syntax.all._
