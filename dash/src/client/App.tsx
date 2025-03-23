@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import _ from 'lodash';
 import { APIResponse } from '../types';
 import './App.css';
 
@@ -23,15 +22,31 @@ function App() {
 
   const locale = 'en-GB';
   const time = now.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', hour12: false});
-  const date = now.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
+  const date = now.toLocaleDateString(locale, { month: 'short', day: 'numeric' });
   const loaded = data != null;
-  const transportTimes = (data?.transportTimes ?? []).map(({label, times}) => `${label} - ${times.join(', ')}`);
+  const transportTimes = (data?.transportTimes ?? [])
+    .map(({label, times}) =>
+      <>
+        <div className='transport-label'>{label}</div>
+        <div className='transport-times'>{times.join(' ')}</div>
+      </>);
   return (
     <>
       {loaded ? <div id='loaded'></div> : null}
-      {transportTimes.map((row, i) => <div key={i}>{row}</div>)}
-      <div className='time'>{time}</div>
-      <div className='date'>{date}</div>
+      <div className='top-container'>
+        <div className='date-time'>
+          <div className='time'>{time}</div>
+          <div className='date'>{date}</div>
+        </div>
+        <div>
+          <div className='temperature'>{data?.weather.temperature}</div>
+          <div className='weather'>{data?.weather.weatherLabel}</div>
+        </div>
+      </div>
+      <hr />
+      <div className='transport-container'>
+        {transportTimes.map((row, i) => <div className='transport-row' key={i}>{row}</div>)}
+      </div>
     </>
   )
 }

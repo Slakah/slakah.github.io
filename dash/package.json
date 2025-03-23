@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "bin/server-run.sh",
-    "dev": "vite",
-    "dev-all": "concurrently -k \"vite\" \"tsx watch src/server.ts\"",
+    "dev": "concurrently -k \"vite\" \"tsx watch src/server.ts\"",
     "build": "vite build && tsc -p tsconfig.server.json",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -13,9 +12,12 @@
     "display-update": "npm run screenshot && bin/display-update output.png"
   },
   "dependencies": {
+    "@fontsource-variable/roboto-condensed": "^5.1.1",
+    "@fontsource/roboto": "^5.1.1",
     "concurrently": "^9.1.2",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "install": "^0.13.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

@@ -1,30 +1,49 @@
 import { promises as fs } from "fs";
 import { APIResponse } from "../types";
+import config from './config';
+import {wmoCode} from './weather';
 import _ from 'lodash';
 
 const stopPointIDs = ['490015052S', '490015052N']
-
-function stopPointArrivalsURL(stopPointID: string) {
-  return `https://api.tfl.gov.uk/StopPoint/${stopPointID}/Arrivals`
-}
 
 interface StopPointArrival {
   expectedArrival: string;
   lineName: string
 }
 
+interface Weather {
+  current: {
+    temperature_2m: number,
+    weather_code: number,
+    is_day: number,
+  };
+}
+
 interface APIData {
   stopPointArrivals: StopPointArrival[];
+  weather: Weather,
 }
 
 async function fetchStopPointArrivals(stopPointID: string): Promise<StopPointArrival[]> {
-  const response = await fetch(stopPointArrivalsURL(stopPointID));
+  const response = await fetch( `https://api.tfl.gov.uk/StopPoint/${stopPointID}/Arrivals`);
   const json = await response.json() as StopPointArrival[];
   return json.map(({expectedArrival, lineName}) => ({expectedArrival, lineName}));
 }
 
+// https://open-meteo.com/en/docs
+async function fetchWeather(): Promise<Weather> {
+  const {latitude, longitude} = config.location;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,weather_code,is_day`;
+  const response = await fetch(url);
+  const {current: {temperature_2m, weather_code, is_day}} = await response.json() as Weather;
+  return {current: {temperature_2m, weather_code, is_day}};
+}
+
 export async function fetchData(): Promise<APIData> {
-  return {'stopPointArrivals': await fetchStopPointArrivals(stopPointIDs[0])};
+  return {
+    stopPointArrivals: await fetchStopPointArrivals(stopPointIDs[0]),
+    weather: await fetchWeather(),
+  };
 }
 
 export async function fetchDataCached(): Promise<APIData> {
@@ -50,6 +69,7 @@ export async function api(): Promise<APIResponse> {
     hour: '2-digit',
     minute: '2-digit',
   });
+  const {temperature_2m, weather_code, is_day} = data.weather.current;
   return {
     transportTimes: Object.values(
       _.groupBy(data.stopPointArrivals, o => o.lineName),
@@ -60,15 +80,21 @@ export async function api(): Promise<APIResponse> {
         .sort()
         .filter(d => d >= nowISO8601())
         .map(readableDate)
+        .slice(0, 3)
     }))
-    .filter(o => o.times.length != 0)
+    .filter(o => o.times.length != 0),
+    weather: {
+      temperature: `${Math.round(temperature_2m)}°C`,
+      weatherCode: weather_code,
+      weatherLabel: wmoCode(weather_code, is_day == 1).description,
+    },
   };
 }
 
 export async function readFromCache(): Promise<{updated: string, data: APIData} | null> {
   try {
     await fs.access('cache.json');
-  } catch (err) {
+  } catch {
     return null;
   }
   try {

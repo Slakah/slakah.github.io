@@ -1,7 +1,11 @@
 #!/bin/bash
 set -euo pipefail
 
-readonly url="$1"
+if [ $# -eq 0 ]; then
+  readonly url="http://localhost:3000"
+else
+  readonly url="$1"
+fi
 
 readonly response_status=$(curl -o /dev/null -s -w "%{http_code}" "$url")
 if [ "200" -ne "$response_status" ]; then
@@ -15,7 +19,8 @@ else
 fi
 
 echo "starting headless chrome..."
-exec "$command" --headless --remote-debugging-port=9222 --no-sandbox --disable-gpu --mute-audio --hide-scrollbars \
+exec "$command" --headless --remote-debugging-port=9222 --no-sandbox --disable-gpu \
+  --aggressive-cache-discard --mute-audio --hide-scrollbars \
   --disable-extensions --disable-site-isolation-trials --disable-software-rasterizer \
   --disable-threaded-animation --disable-threaded-scrolling --disable-background-timer-throttling \
   --window-size=400x300 $url
