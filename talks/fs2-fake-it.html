@@ -109,16 +109,16 @@ Now let's generate some events...
 ```scala
 List.fill(10)(arbPlaybackEvt.arbitrary.sample).flatten
 // res0: List[PlaybackEvent] = List(
-//   Ended(+156188594-01-01T20:53:01.500Z, 5feadc24-7b8b-4176-99fb-056874d9e8a9),
-//   Ended(3053-12-07T15:20:59.893Z, 76835572-05ba-4be2-814e-31958435a1a1),
-//   Resumed(1970-01-01T00:00:00Z, 0ac97e6e-8abd-4659-8c36-77ac9c8a60a6),
-//   Ended(+25303488-03-09T09:42:25.003Z, afdd97bf-0de4-4efa-80c2-c2a3be354ac5),
-//   Started(1969-12-31T23:59:59.999Z, ab11ede7-8128-481d-86ad-4b373afd4ba6),
-//   Started(+280532108-01-01T23:59:59.999Z, 5073e87f-c823-4568-a751-d2b180107996),
-//   Resumed(+75199349-01-01T00:00:00.001Z, 1268afee-1b69-4696-b7d1-128c8a698fe8),
-//   Ended(+68632272-01-01T23:59:59.999Z, 407eee69-1fa8-43a5-86aa-0440e61a967f),
-//   Started(0204-06-10T21:09:31.958Z, b7b23e60-be9d-4625-9524-37c04939d1e7),
-//   Started(3329-07-17T00:00:00Z, 00e70ac2-cb45-49f6-a575-38ed422737d1)
+//   Paused(1074-12-08T23:59:59.059Z, 799ba5eb-7829-4686-bf75-f1a00fbdb37c),
+//   Resumed(0710-09-12T14:56:50.997Z, c424b840-f4be-415c-96c2-1e9d3e5348da),
+//   Ended(1468-11-16T00:00:00Z, 8ef8513c-4b0c-4a13-beed-d42936b2d724),
+//   Started(1970-01-01T00:00:00Z, a1042b2e-731a-4270-926f-29c44c7db2a5),
+//   Paused(0469-03-17T11:21:46.033Z, 389a86f2-32d0-4a44-a636-116ec049c995),
+//   Ended(2244-08-19T18:12:01.636Z, d3eb49c8-45e0-4573-acd7-565a44ae7597),
+//   Resumed(2208-01-02T12:07:14.961Z, 9d1b4f85-19cf-478c-898d-cb36a75dc152),
+//   Paused(4000-08-12T00:00:00Z, 3033a282-2ce1-46f6-bc8d-acfacb667845),
+//   Ended(1842-12-25T21:04:43.239Z, ec120adb-f59d-47ff-9d3f-a3e23350c4f2),
+//   Started(3021-07-06T04:23:46.867Z, 69edc9d7-dc5f-429b-852c-a63495040032)
 // )
 ```
 
@@ -176,8 +176,8 @@ def session: Stream[IO, PlaybackEvent] = for {
 ```scala
 session.compile.toList.unsafeRunSync()
 // res2: List[PlaybackEvent] = List(
-//   Started(2019-11-26T12:00:00Z, d9227895-139f-4ac9-8f65-500ad0a0a170),
-//   Ended(2019-11-26T12:01:00Z, d9227895-139f-4ac9-8f65-500ad0a0a170)
+//   Started(2019-11-26T12:00:00Z, e83ca2d5-dfb5-4b92-bd04-f1e3256e9511),
+//   Ended(2019-11-26T12:01:00Z, e83ca2d5-dfb5-4b92-bd04-f1e3256e9511)
 // )
 ```
 
@@ -209,9 +209,9 @@ idealSession
   .compile
   .drain
   .unsafeRunAsyncAndForget()
-// Started(2018-12-20T00:00:00Z,ed4ed1f7-f06c-4f37-8147-e7f9aced1ed0)
+// Started(2018-12-20T00:00:00Z,3576c9cd-63f7-4ec6-bd6c-9fe98efdb171)
 testContext.tick(1.hour)
-// Ended(2018-12-20T00:30:00Z,ed4ed1f7-f06c-4f37-8147-e7f9aced1ed0)
+// Ended(2018-12-20T00:30:00Z,3576c9cd-63f7-4ec6-bd6c-9fe98efdb171)
 ```
 
 ---
@@ -245,16 +245,16 @@ Stream.emit(idealSession)
 
 ```scala
 testContext.tick(1.hour)
-// Started(2018-12-20T01:00:00Z,9d58f205-53ec-4c81-81fc-11bcce2c6a21)
-// Started(2018-12-20T01:00:00Z,8b640218-2878-4eb4-81f6-4b9c984892f3)
-// Started(2018-12-20T01:00:00Z,d1a15d29-d008-443f-8cf0-aab7e5ef0e23)
-// Ended(2018-12-20T01:30:00Z,9d58f205-53ec-4c81-81fc-11bcce2c6a21)
-// Ended(2018-12-20T01:30:00Z,8b640218-2878-4eb4-81f6-4b9c984892f3)
-// Ended(2018-12-20T01:30:00Z,d1a15d29-d008-443f-8cf0-aab7e5ef0e23)
-// Started(2018-12-20T01:30:00Z,9fd3ab7a-fe58-4264-841c-a02f60586673)
-// Started(2018-12-20T01:30:00Z,3e8d7e43-81e4-43f8-801d-eda1bf29ead0)
-// Ended(2018-12-20T02:00:00Z,3e8d7e43-81e4-43f8-801d-eda1bf29ead0)
-// Ended(2018-12-20T02:00:00Z,9fd3ab7a-fe58-4264-841c-a02f60586673)
+// Started(2018-12-20T01:00:00Z,a24127fe-9336-4d24-95fc-d19773088172)
+// Started(2018-12-20T01:00:00Z,94ab9089-9ba0-4ba0-bf50-c5c19876b538)
+// Started(2018-12-20T01:00:00Z,75d138e0-88e8-4994-9bdf-ee174c45117b)
+// Ended(2018-12-20T01:30:00Z,a24127fe-9336-4d24-95fc-d19773088172)
+// Ended(2018-12-20T01:30:00Z,75d138e0-88e8-4994-9bdf-ee174c45117b)
+// Ended(2018-12-20T01:30:00Z,94ab9089-9ba0-4ba0-bf50-c5c19876b538)
+// Started(2018-12-20T01:30:00Z,2ba5535c-84aa-426c-afa7-fb41f5c346e5)
+// Started(2018-12-20T01:30:00Z,a8dc6471-29fa-4514-a9d6-96790d8a510e)
+// Ended(2018-12-20T02:00:00Z,2ba5535c-84aa-426c-afa7-fb41f5c346e5)
+// Ended(2018-12-20T02:00:00Z,a8dc6471-29fa-4514-a9d6-96790d8a510e)
 ```
 
 ???
@@ -294,18 +294,18 @@ Stream.emits(List(idealSession, pauseSession))
 
 ```scala
 testContext.tick(1.hour)
-// Started(2018-12-20T02:00:00Z,e577e220-6847-41fd-93c0-63417503a114)
-// Started(2018-12-20T02:00:00Z,94438ebe-c09b-41ec-8ee3-d3d167222b30)
-// Started(2018-12-20T02:00:00Z,1d7ede97-3ca5-4d8d-aab6-5159d8fd742f)
-// Paused(2018-12-20T02:00:20Z,1d7ede97-3ca5-4d8d-aab6-5159d8fd742f)
-// Resumed(2018-12-20T02:00:25Z,1d7ede97-3ca5-4d8d-aab6-5159d8fd742f)
-// Ended(2018-12-20T02:20:25Z,1d7ede97-3ca5-4d8d-aab6-5159d8fd742f)
-// Started(2018-12-20T02:20:25Z,9fbc764b-b159-48e3-926f-b0c8a309196a)
-// Paused(2018-12-20T02:20:45Z,9fbc764b-b159-48e3-926f-b0c8a309196a)
-// Resumed(2018-12-20T02:20:50Z,9fbc764b-b159-48e3-926f-b0c8a309196a)
-// Ended(2018-12-20T02:30:00Z,94438ebe-c09b-41ec-8ee3-d3d167222b30)
-// Ended(2018-12-20T02:30:00Z,e577e220-6847-41fd-93c0-63417503a114)
-// Ended(2018-12-20T02:40:50Z,9fbc764b-b159-48e3-926f-b0c8a309196a)
+// Started(2018-12-20T02:00:00Z,95edcd1d-b5f6-4245-bced-5db70cced721)
+// Started(2018-12-20T02:00:00Z,ebcd7002-f042-4cd7-87bc-4a73de74459a)
+// Started(2018-12-20T02:00:00Z,36b49f1d-54fc-4dcb-9eab-10bbf765d81f)
+// Paused(2018-12-20T02:00:20Z,ebcd7002-f042-4cd7-87bc-4a73de74459a)
+// Resumed(2018-12-20T02:00:25Z,ebcd7002-f042-4cd7-87bc-4a73de74459a)
+// Ended(2018-12-20T02:20:25Z,ebcd7002-f042-4cd7-87bc-4a73de74459a)
+// Started(2018-12-20T02:20:25Z,5d74fc2d-b5d5-4c7b-8f46-451eae9c6269)
+// Paused(2018-12-20T02:20:45Z,5d74fc2d-b5d5-4c7b-8f46-451eae9c6269)
+// Resumed(2018-12-20T02:20:50Z,5d74fc2d-b5d5-4c7b-8f46-451eae9c6269)
+// Ended(2018-12-20T02:30:00Z,36b49f1d-54fc-4dcb-9eab-10bbf765d81f)
+// Ended(2018-12-20T02:30:00Z,95edcd1d-b5f6-4245-bced-5db70cced721)
+// Ended(2018-12-20T02:40:50Z,5d74fc2d-b5d5-4c7b-8f46-451eae9c6269)
 ```
 
 ---
@@ -336,8 +336,8 @@ f.value
 // res11: Option[scala.util.Try[List[PlaybackEvent]]] = Some(
 //   Success(
 //     List(
-//       Started(2018-12-20T03:00:00Z, 49b8eb2b-20f5-4395-a7c6-4d9cfb8268af),
-//       Ended(2018-12-20T03:30:00Z, 49b8eb2b-20f5-4395-a7c6-4d9cfb8268af)
+//       Started(2018-12-20T03:00:00Z, a93986b7-1b31-4644-8232-3b914e57964f),
+//       Ended(2018-12-20T03:30:00Z, a93986b7-1b31-4644-8232-3b914e57964f)
 //     )
 //   )
 // )
