@@ -1,0 +1,6 @@
+# Every minute
+* * * * * /usr/bin/zsh -c "date && cd /home/jamescollier/ && source .zshrc && cd Coding/slakah.github.io/dash && bin/screenshot-display.sh >> logs/screenshot-display.log 2>&1"
+# At 04:05
+5 4 * * * /usr/bin/zsh -c "date && cd /home/jamescollier/ && source .zshrc && Coding/slakah.github.io/dash && poetry run python bin/clean.py >> logs/clean.log 2>&1"
+# At 23:05 on Monday
+5 23 * * 1 /usr/bin/zsh -c "rm -f /home/jamescollier/Coding/slakah.github.io/dash/logs/*"

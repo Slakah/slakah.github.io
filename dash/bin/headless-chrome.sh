@@ -21,6 +21,21 @@ fi
 echo "starting headless chrome..."
 exec "$command" --headless --remote-debugging-port=9222 --no-sandbox --disable-gpu \
   --aggressive-cache-discard --mute-audio --hide-scrollbars \
+  --disable-dev-shm-usage \
+  --disable-background-networking \
+  --disable-breakpad \
+  --disable-client-side-phishing-detection \
+  --disable-default-apps \
+  --disable-hang-monitor \
+  --disable-popup-blocking \
+  --disable-prompt-on-repost \
+  --disable-sync \
+  --disable-translate \
+  --metrics-recording-only \
+  --no-first-run \
+  --safebrowsing-disable-auto-update \
+  --mute-audio \
+  --disable-features=site-per-process,TranslateUI \
   --disable-extensions --disable-site-isolation-trials --disable-software-rasterizer \
   --disable-threaded-animation --disable-threaded-scrolling --disable-background-timer-throttling \
   --window-size=400x300 $url

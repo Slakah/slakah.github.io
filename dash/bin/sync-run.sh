@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-readonly dest='james@jim-pi.local'
+readonly dest='jamescollier@jim-pi.local'
 
 if [ $# -eq 0 ]; then
   readonly command='sudo systemctl restart dash && sudo journalctl -u dash --since "1 hour ago" -f'

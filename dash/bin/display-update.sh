@@ -13,7 +13,7 @@ if [ -f "$hashFile" ]; then
     exit 0
   fi
 fi
-echo "$outputHash" > $hashFile
 
 echo "updating display to $output..."
 exec poetry run python bin/image.py -i $output
+echo "$outputHash" > $hashFile
