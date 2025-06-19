@@ -8,7 +8,7 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
-requests = "^2.32.3"
+requests = "^2.32.4"
 fonts = "^0.0.3"
 font-source-sans-pro = "^0.0.1"
 font-source-serif-pro = "^0.0.1"
