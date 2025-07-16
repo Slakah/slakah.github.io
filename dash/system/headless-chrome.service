@@ -3,12 +3,15 @@ Description=Headless Chrome
 After=network.target
 
 [Service]
+Restart=always
+RestartSec=10m
+RuntimeMaxSec=2d
 Type=simple
 User=jamescollier
-Shell=/usr/bin/zsh
 WorkingDirectory=/home/jamescollier/Coding/slakah.github.io/dash
 ExecStart=/usr/bin/zsh -c "echo 'sleeping 2min...' && sleep 120 && bin/headless-chrome.sh"
 MemoryMax=300M
 
 [Install]
 WantedBy=multi-user.target
+

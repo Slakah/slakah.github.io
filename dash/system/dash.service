@@ -5,10 +5,10 @@ After=network.target
 [Service]
 Type=simple
 User=jamescollier
-Shell=/usr/bin/zsh
 WorkingDirectory=/home/jamescollier/Coding/slakah.github.io/dash
 ExecStart=/usr/bin/zsh bin/server-run.sh
 Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
+
