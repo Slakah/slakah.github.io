@@ -38,10 +38,13 @@ def solve(input: String): String = {
     .view.mapValues(_.min)
     .toMap
 
-  val viablePaths = dests.flatMap(dest => chars.map(c => shortestPaths.get(c, dest)).sequence.map(distance => (dest, distance.sum)))
-  val (cheapestDest, cheapestCost) = viablePaths.minBy(_._2)
-
-  s"$input\n$cheapestDest (cost $cheapestCost)"
+  val viablePaths = dests.flatMap(dest => chars.traverse(c => shortestPaths.get(c, dest)).map(distance => (dest, distance.sum)))
+  val result = viablePaths.minByOption(_._2) match {
+    case Some((cheapestDest, cheapestCost)) =>
+      s"$cheapestDest (distance $cheapestCost)"
+    case None => "No path"
+  }
+  s"$input\n$result"
 }
 
 println(data.map(solve).mkString("\n"))

@@ -1,3 +1,5 @@
 ABC: A->B,B->C
 CCC: A->B,B->C
+AAD: A->B,B->C,C->D
 AAD: A->B,B->C,C->D,D->A
+DAA: A->B,C->D
