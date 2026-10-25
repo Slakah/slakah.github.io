@@ -14,7 +14,7 @@ lazy val docs = project
       "org.typelevel" %% "cats-core" % "2.13.0",
       "org.typelevel" %% "cats-parse" % "1.1.0"
     ),
-    watchSources += baseDirectory.in(ThisBuild).value / "docs"
+    watchSources += (ThisBuild / baseDirectory).value / "docs"
   )
 
 ThisBuild / scalacOptions := Seq(
