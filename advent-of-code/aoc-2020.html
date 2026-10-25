@@ -77,8 +77,8 @@ println(input2.split(<span class="hljs-string">"\n"</span>).take(<span class="hl
 }
 </code></pre>
 <pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> lines = parser.parseAll(input2)
-<span class="hljs-comment">// lines: Either[cats.parse.Parser.Error, cats.data.NonEmptyList[Line]] = Right(</span>
-<span class="hljs-comment">//   value = NonEmptyList(</span>
+<span class="hljs-comment">// lines: Either[Error, NonEmptyList[Line]] = Right(</span>
+<span class="hljs-comment">//   NonEmptyList(</span>
 <span class="hljs-comment">//     head = Line(</span>
 <span class="hljs-comment">//       rule = Rule(num1 = 1, num2 = 8, char = 'n'),</span>
 <span class="hljs-comment">//       password = "dpwpmhknmnlglhjtrbpx"</span>
@@ -133,7 +133,7 @@ println(input2.split(<span class="hljs-string">"\n"</span>).take(<span class="hl
   <span class="hljs-keyword">val</span> count = password.count(_ === rule.char)
   (rule.num1 to rule.num2).contains(count)
 })
-<span class="hljs-comment">// res3: Either[cats.parse.Parser.Error, Long] = Right(value = 445L)</span>
+<span class="hljs-comment">// res3: Either[Error, Long] = Right(445L)</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="part-2-1"></a><a href="#part-2-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Part 2</h3>
 <p>Apply the new rule.</p>
@@ -147,7 +147,7 @@ println(input2.split(<span class="hljs-string">"\n"</span>).take(<span class="hl
     <span class="hljs-keyword">case</span> (<span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>) =&gt; <span class="hljs-literal">false</span>
   }
 })
-<span class="hljs-comment">// res4: Either[cats.parse.Parser.Error, Long] = Right(value = 491L)</span>
+<span class="hljs-comment">// res4: Either[Error, Long] = Right(491L)</span>
 </code></pre>
 <h2><a class="anchor" aria-hidden="true" id="problem-3"></a><a href="#problem-3" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Problem 3</h2>
 <p><a href="https://adventofcode.com/2020/day/3">Problem link</a></p>
@@ -183,7 +183,7 @@ val s = """..##.......
 
 </code></pre>
 <pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> grid = parseGrid(s)
-<span class="hljs-comment">// grid: Grid[Cell] = Array(</span>
+<span class="hljs-comment">// grid: Array[Array[Cell]] = Array(</span>
 <span class="hljs-comment">//   Array(Open, Open, Tree, Tree, Open, Open, Open, Open, Open, Open, Open),</span>
 <span class="hljs-comment">//   Array(Tree, Open, Open, Open, Tree, Open, Open, Open, Tree, Open, Open),</span>
 <span class="hljs-comment">//   Array(Open, Tree, Open, Open, Open, Open, Tree, Open, Open, Tree, Open),</span>
@@ -198,8 +198,7 @@ val s = """..##.......
 <span class="hljs-comment">// )</span>
 </code></pre>
 <p>Now let's render the grid to help debug.</p>
-<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> $ivy.`org.typelevel::cats-core:<span class="hljs-number">2.3</span><span class="hljs-number">.0</span>`
-<span class="hljs-keyword">import</span> cats.implicits._
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> cats.implicits._
 <span class="hljs-keyword">import</span> cats.<span class="hljs-type">Show</span>
 
 <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Cell</span> </span>{
@@ -281,7 +280,13 @@ println(showGrid(overlayPath(grid, downTheSlope(grid, <span class="hljs-number">
 <h3><a class="anchor" aria-hidden="true" id="part-2-2"></a><a href="#part-2-2" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Part 2</h3>
 <p>Same again, for different trajectories, timesing by all the count of trees.</p>
 <pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> slopes = <span class="hljs-type">List</span>((<span class="hljs-number">1</span>, <span class="hljs-number">1</span>), (<span class="hljs-number">3</span>, <span class="hljs-number">1</span>), (<span class="hljs-number">5</span>, <span class="hljs-number">1</span>), (<span class="hljs-number">7</span>, <span class="hljs-number">1</span>), (<span class="hljs-number">1</span>, <span class="hljs-number">2</span>))
-<span class="hljs-comment">// slopes: List[(Int, Int)] = List((1, 1), (3, 1), (5, 1), (7, 1), (1, 2))</span>
+<span class="hljs-comment">// slopes: List[Tuple2[Int, Int]] = List(</span>
+<span class="hljs-comment">//   (1, 1),</span>
+<span class="hljs-comment">//   (3, 1),</span>
+<span class="hljs-comment">//   (5, 1),</span>
+<span class="hljs-comment">//   (7, 1),</span>
+<span class="hljs-comment">//   (1, 2)</span>
+<span class="hljs-comment">// )</span>
 
 slopes
   .map { <span class="hljs-keyword">case</span> (xDelta, yDelta) =&gt;
@@ -317,74 +322,74 @@ slopes
     <span class="hljs-type">P</span>.string(field + <span class="hljs-string">":"</span>) *&gt; <span class="hljs-type">P</span>.until(whitespace).map(builder)
 
   <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fields</span> </span>= <span class="hljs-type">P</span>.oneOf[<span class="hljs-type">Field</span>](<span class="hljs-type">List</span>(
-    field(<span class="hljs-string">"byr"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">BirthYear</span>),
-    field(<span class="hljs-string">"iyr"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">IssueYear</span>),
-    field(<span class="hljs-string">"eyr"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">ExpirationYear</span>),
-    field(<span class="hljs-string">"hgt"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">Height</span>),
-    field(<span class="hljs-string">"hcl"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">HairColor</span>),
-    field(<span class="hljs-string">"ecl"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">EyeColor</span>),
-    field(<span class="hljs-string">"pid"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">PassportID</span>),
-    field(<span class="hljs-string">"cid"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">CountryID</span>),
+    field(<span class="hljs-string">"byr"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">BirthYear</span>(_)),
+    field(<span class="hljs-string">"iyr"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">IssueYear</span>(_)),
+    field(<span class="hljs-string">"eyr"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">ExpirationYear</span>(_)),
+    field(<span class="hljs-string">"hgt"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">Height</span>(_)),
+    field(<span class="hljs-string">"hcl"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">HairColor</span>(_)),
+    field(<span class="hljs-string">"ecl"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">EyeColor</span>(_)),
+    field(<span class="hljs-string">"pid"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">PassportID</span>(_)),
+    field(<span class="hljs-string">"cid"</span>, <span class="hljs-type">Field</span>.<span class="hljs-type">CountryID</span>(_)),
   ))
-  <span class="hljs-keyword">val</span> passport = <span class="hljs-type">P</span>.repSep(fields, <span class="hljs-number">1</span>, whitespace).map(<span class="hljs-type">Passport</span>)
+  <span class="hljs-keyword">val</span> passport = <span class="hljs-type">P</span>.repSep(fields, <span class="hljs-number">1</span>, whitespace).map(<span class="hljs-type">Passport</span>(_))
   <span class="hljs-keyword">val</span> batch = <span class="hljs-type">P</span>.repSep(passport, <span class="hljs-number">1</span>, <span class="hljs-type">P</span>.string(<span class="hljs-string">"\n\n"</span>))
 }
 </code></pre>
 <p>Test the parser out on the test input.</p>
 <pre><code class="hljs css language-scala"><span class="hljs-type">Parser</span>.batch.parseAll(passportInput)
-<span class="hljs-comment">// res9: Either[cats.parse.Parser.Error, NonEmptyList[Passport]] = Right(</span>
-<span class="hljs-comment">//   value = NonEmptyList(</span>
+<span class="hljs-comment">// res9: Either[Error, NonEmptyList[Passport]] = Right(</span>
+<span class="hljs-comment">//   NonEmptyList(</span>
 <span class="hljs-comment">//     head = Passport(</span>
-<span class="hljs-comment">//       fields = NonEmptyList(</span>
-<span class="hljs-comment">//         head = EyeColor(value = "gry"),</span>
+<span class="hljs-comment">//       NonEmptyList(</span>
+<span class="hljs-comment">//         head = EyeColor("gry"),</span>
 <span class="hljs-comment">//         tail = List(</span>
-<span class="hljs-comment">//           PassportID(value = "860033327"),</span>
-<span class="hljs-comment">//           ExpirationYear(value = "2020"),</span>
-<span class="hljs-comment">//           HairColor(value = "#fffffd"),</span>
-<span class="hljs-comment">//           BirthYear(value = "1937"),</span>
-<span class="hljs-comment">//           IssueYear(value = "2017"),</span>
-<span class="hljs-comment">//           CountryID(value = "147"),</span>
-<span class="hljs-comment">//           Height(value = "183cm")</span>
+<span class="hljs-comment">//           PassportID("860033327"),</span>
+<span class="hljs-comment">//           ExpirationYear("2020"),</span>
+<span class="hljs-comment">//           HairColor("#fffffd"),</span>
+<span class="hljs-comment">//           BirthYear("1937"),</span>
+<span class="hljs-comment">//           IssueYear("2017"),</span>
+<span class="hljs-comment">//           CountryID("147"),</span>
+<span class="hljs-comment">//           Height("183cm")</span>
 <span class="hljs-comment">//         )</span>
 <span class="hljs-comment">//       )</span>
 <span class="hljs-comment">//     ),</span>
 <span class="hljs-comment">//     tail = List(</span>
 <span class="hljs-comment">//       Passport(</span>
-<span class="hljs-comment">//         fields = NonEmptyList(</span>
-<span class="hljs-comment">//           head = IssueYear(value = "2013"),</span>
+<span class="hljs-comment">//         NonEmptyList(</span>
+<span class="hljs-comment">//           head = IssueYear("2013"),</span>
 <span class="hljs-comment">//           tail = List(</span>
-<span class="hljs-comment">//             EyeColor(value = "amb"),</span>
-<span class="hljs-comment">//             CountryID(value = "350"),</span>
-<span class="hljs-comment">//             ExpirationYear(value = "2023"),</span>
-<span class="hljs-comment">//             PassportID(value = "028048884"),</span>
-<span class="hljs-comment">//             HairColor(value = "#cfa07d"),</span>
-<span class="hljs-comment">//             BirthYear(value = "1929")</span>
+<span class="hljs-comment">//             EyeColor("amb"),</span>
+<span class="hljs-comment">//             CountryID("350"),</span>
+<span class="hljs-comment">//             ExpirationYear("2023"),</span>
+<span class="hljs-comment">//             PassportID("028048884"),</span>
+<span class="hljs-comment">//             HairColor("#cfa07d"),</span>
+<span class="hljs-comment">//             BirthYear("1929")</span>
 <span class="hljs-comment">//           )</span>
 <span class="hljs-comment">//         )</span>
 <span class="hljs-comment">//       ),</span>
 <span class="hljs-comment">//       Passport(</span>
-<span class="hljs-comment">//         fields = NonEmptyList(</span>
-<span class="hljs-comment">//           head = HairColor(value = "#ae17e1"),</span>
+<span class="hljs-comment">//         NonEmptyList(</span>
+<span class="hljs-comment">//           head = HairColor("#ae17e1"),</span>
 <span class="hljs-comment">//           tail = List(</span>
-<span class="hljs-comment">//             IssueYear(value = "2013"),</span>
-<span class="hljs-comment">//             ExpirationYear(value = "2024"),</span>
-<span class="hljs-comment">//             EyeColor(value = "brn"),</span>
-<span class="hljs-comment">//             PassportID(value = "760753108"),</span>
-<span class="hljs-comment">//             BirthYear(value = "1931"),</span>
-<span class="hljs-comment">//             Height(value = "179cm")</span>
+<span class="hljs-comment">//             IssueYear("2013"),</span>
+<span class="hljs-comment">//             ExpirationYear("2024"),</span>
+<span class="hljs-comment">//             EyeColor("brn"),</span>
+<span class="hljs-comment">//             PassportID("760753108"),</span>
+<span class="hljs-comment">//             BirthYear("1931"),</span>
+<span class="hljs-comment">//             Height("179cm")</span>
 <span class="hljs-comment">//           )</span>
 <span class="hljs-comment">//         )</span>
 <span class="hljs-comment">//       ),</span>
 <span class="hljs-comment">//       Passport(</span>
-<span class="hljs-comment">//         fields = NonEmptyList(</span>
-<span class="hljs-comment">//           head = HairColor(value = "#cfa07d"),</span>
+<span class="hljs-comment">//         NonEmptyList(</span>
+<span class="hljs-comment">//           head = HairColor("#cfa07d"),</span>
 <span class="hljs-comment">//           tail = List(</span>
-<span class="hljs-comment">//             ExpirationYear(value = "2025"),</span>
-<span class="hljs-comment">//             PassportID(value = "166559648"),</span>
+<span class="hljs-comment">//             ExpirationYear("2025"),</span>
+<span class="hljs-comment">//             PassportID("166559648"),</span>
 <span class="hljs-comment">// ...</span>
 </code></pre>
 <p>Now let's validate the passports:</p>
-<pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> requiredFields = <span class="hljs-type">Set</span>[<span class="hljs-type">Class</span>[_]](
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> requiredFields = <span class="hljs-type">Set</span>[<span class="hljs-type">Class</span>[?]](
   classOf[<span class="hljs-type">Field</span>.<span class="hljs-type">BirthYear</span>],
   classOf[<span class="hljs-type">Field</span>.<span class="hljs-type">IssueYear</span>],
   classOf[<span class="hljs-type">Field</span>.<span class="hljs-type">ExpirationYear</span>],
@@ -465,7 +470,7 @@ slopes
   }
 
 decodeRow(encodedRow)
-<span class="hljs-comment">// res12: (Int, Int) = (44, 44)</span>
+<span class="hljs-comment">// res12: Tuple2[Int, Int] = (44, 44)</span>
 </code></pre>
 <p>Now the same for the column.</p>
 <pre><code class="hljs css language-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decodeCol</span></span>(encoded: <span class="hljs-type">String</span>) =
@@ -478,7 +483,7 @@ decodeRow(encodedRow)
   }
 
 decodeCol(encodedCol)
-<span class="hljs-comment">// res13: (Int, Int) = (5, 5)</span>
+<span class="hljs-comment">// res13: Tuple2[Int, Int] = (5, 5)</span>
 </code></pre>
 <p>Now put them all together, <code>row * 8 + col = seat</code>.</p>
 <pre><code class="hljs css language-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decodeSeat</span></span>(encoded: <span class="hljs-type">String</span>) = {
@@ -506,7 +511,7 @@ between sequential elements. If the difference isn't 1, we've found the disconti
 <pre><code class="hljs css language-scala">seatIds.sliding(<span class="hljs-number">2</span>).collectFirst {
   <span class="hljs-keyword">case</span> x :: y :: <span class="hljs-type">Nil</span> <span class="hljs-keyword">if</span> (y - x) != <span class="hljs-number">1</span> =&gt; (x, y)
 }
-<span class="hljs-comment">// res18: Option[(Int, Int)] = Some(value = (558, 560))</span>
+<span class="hljs-comment">// res18: Option[Tuple2[Int, Int]] = Some((558, 560))</span>
 </code></pre>
 <p>So our seat is between 558 and 560, must be 559!</p>
 <h2><a class="anchor" aria-hidden="true" id="problem-6"></a><a href="#problem-6" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Problem 6</h2>
@@ -616,7 +621,7 @@ allYesForGroup.map(_.size).foldLeft(<span class="hljs-number">0</span>)(_ + _)
 }
 </code></pre>
 <pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> rules = <span class="hljs-type">Parser</span>.rules.parseAll(input7).getOrElse(???)
-<span class="hljs-comment">// rules: cats.data.NonEmptyList[Rule] = NonEmptyList(</span>
+<span class="hljs-comment">// rules: NonEmptyList[Rule] = NonEmptyList(</span>
 <span class="hljs-comment">//   head = Rule(</span>
 <span class="hljs-comment">//     color = "dark olive",</span>
 <span class="hljs-comment">//     requirements = List(</span>
@@ -767,9 +772,9 @@ countBags(color2reqs, <span class="hljs-string">"shiny gold"</span>)
 
   <span class="hljs-keyword">val</span> ops = <span class="hljs-type">P</span>.repSep(
     <span class="hljs-type">P</span>.oneOf(<span class="hljs-type">List</span>(
-      op(<span class="hljs-string">"acc"</span>, <span class="hljs-type">Acc</span>),
-      op(<span class="hljs-string">"jmp"</span>, <span class="hljs-type">Jmp</span>),
-      op(<span class="hljs-string">"nop"</span>, <span class="hljs-type">Nop</span>)
+      op(<span class="hljs-string">"acc"</span>, <span class="hljs-type">Acc</span>(_)),
+      op(<span class="hljs-string">"jmp"</span>, <span class="hljs-type">Jmp</span>(_)),
+      op(<span class="hljs-string">"nop"</span>, <span class="hljs-type">Nop</span>(_))
     )), <span class="hljs-number">1</span>, <span class="hljs-type">P</span>.char('\n'))
 }
 </code></pre>
@@ -782,18 +787,12 @@ acc -99
 acc +1
 jmp -4
 acc +6""")
-// res27: Either[cats.parse.Parser.Error, cats.data.NonEmptyList[Op]] = Right(
-//   value = NonEmptyList(
-//     head = Nop(value = 0),
-//     tail = List(
-//       Acc(value = 1),
-//       Jmp(value = 4),
-//       Acc(value = 3),
-//       Jmp(value = -3),
-//       Acc(value = -99),
-//       Acc(value = 1),
-//       Jmp(value = -4),
-//       Acc(value = 6)
+// res27: Either[Error, NonEmptyList[Op]] = Left(
+//   Error(
+//     `` = 6,
+//     `` = NonEmptyList(
+//       head = EndOfString(offset = 6, length = 79),
+//       tail = List()
 //     )
 //   )
 // )
@@ -827,7 +826,7 @@ acc +6""")
 <pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> instructions = <span class="hljs-type">Parser</span>.ops.parseAll(input8)
   .getOrElse(???)
   .toList
-<span class="hljs-keyword">val</span> <span class="hljs-type">Left</span>((acc, seen)) = run(instructions)
+<span class="hljs-keyword">val</span> <span class="hljs-type">Left</span>((acc, seen)) = run(instructions).runtimeChecked
 </code></pre>
 <pre><code class="hljs css language-scala">acc
 <span class="hljs-comment">// res28: Int = 1709</span>
@@ -847,7 +846,7 @@ acc +6""")
       run(newInstructions).toOption
   }
 }
-<span class="hljs-comment">// res29: Option[Int] = Some(value = 1976)</span>
+<span class="hljs-comment">// res29: Option[Int] = Some(1976)</span>
 </code></pre>
 <p>That's the answer!</p>
 <h2><a class="anchor" aria-hidden="true" id="problem-9"></a><a href="#problem-9" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Problem 9</h2>
@@ -903,7 +902,7 @@ as well as the preceding 5 numbers. So a sliding window of 6 works perfectly.</p
       <span class="hljs-type">Some</span>(head)
     <span class="hljs-keyword">case</span> _ =&gt; <span class="hljs-type">None</span>
   }
-<span class="hljs-comment">// res30: Option[Long] = Some(value = 127L)</span>
+<span class="hljs-comment">// res30: Option[Long] = Some(127L)</span>
 </code></pre>
 <p>Awesome, let's go ahead and run on the input with a sliding window of 1 + 25:</p>
 <pre><code class="hljs css language-scala">input9
@@ -916,7 +915,7 @@ as well as the preceding 5 numbers. So a sliding window of 6 works perfectly.</p
       <span class="hljs-type">Some</span>(head)
     <span class="hljs-keyword">case</span> _ =&gt; <span class="hljs-type">None</span>
   }
-<span class="hljs-comment">// res31: Option[Long] = Some(value = 36845998L)</span>
+<span class="hljs-comment">// res31: Option[Long] = Some(36845998L)</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="part-2-8"></a><a href="#part-2-8" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Part 2</h3>
 <p>Let's just go ahead and brute force this. The possible size of subsets of the input will be
@@ -927,7 +926,7 @@ until one of the windows sums up to the result of the previous answer <code>3684
     <span class="hljs-keyword">if</span> (list.sum === <span class="hljs-number">36845998</span>L) <span class="hljs-type">Some</span>(list)
     <span class="hljs-keyword">else</span> <span class="hljs-type">None</span>
   }
-}
+}.runtimeChecked
 <span class="hljs-comment">// list: List[Long] = List(</span>
 <span class="hljs-comment">//   1443202L,</span>
 <span class="hljs-comment">//   1886894L,</span>
@@ -1048,13 +1047,13 @@ countDifferences(adapters)
 <pre><code class="hljs css language-scala">countDifferences(adapters)
   .groupBy(identity) <span class="hljs-comment">// group by the joltage step</span>
   .view.mapValues(_.size) <span class="hljs-comment">// count the number of joltage steps</span>
-<span class="hljs-comment">// res34: collection.MapView[Int, Int] = MapView((1, 22), (3, 10))</span>
+<span class="hljs-comment">// res34: MapView[Int, Int] = MapView((1, 22), (3, 10))</span>
 </code></pre>
 <p>So we have 22 of 1 joltage steps, and 10 of 3 joltage steps. Which matches what was specified for the example. Now for the real input, we'll ignore the extra max + 3 joltage adapter this time, and just remember to count an extra 3 joltage step at the end.</p>
 <pre><code class="hljs css language-scala">countDifferences(input10)
   .groupBy(identity)
   .view.mapValues(_.size)
-<span class="hljs-comment">// res35: collection.MapView[Int, Int] = MapView((1, 71), (3, 26))</span>
+<span class="hljs-comment">// res35: MapView[Int, Int] = MapView((1, 71), (3, 26))</span>
 </code></pre>
 <p>So 71 of 1 joltages steps, and 26 of the 3 joltage steps (remember to add 1 for the adapter we choose to miss out).</p>
 <p>Times them together for the correct answer.</p>
@@ -1069,7 +1068,7 @@ countDifferences(adapters)
   .toList
   .groupBy(identity)
   .view.mapValues(_.size)
-<span class="hljs-comment">// res37: collection.MapView[Int, Int] = MapView((1, 70), (3, 26))</span>
+<span class="hljs-comment">// res37: MapView[Int, Int] = MapView((1, 70), (3, 26))</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="part-2-9"></a><a href="#part-2-9" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Part 2</h3>
 <p>For part 2, we need to count the total number of unique paths from 0 to the maximum joltage.</p>
