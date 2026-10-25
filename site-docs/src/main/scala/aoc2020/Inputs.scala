@@ -1206,7 +1206,7 @@ object Inputs {
 11-14 g: ggggggggggggggggg
 6-7 q: qqqqvqhq"""
 
-val input3 = """.......#................#......
+  val input3 = """.......#................#......
 ...#.#.....#.##.....#..#.......
 ..#..#.#......#.#.#............
 ....#...#...##.....#..#.....#..
@@ -6116,7 +6116,7 @@ dim fuchsia bags contain 2 bright chartreuse bags, 4 mirrored teal bags, 4 posh 
 dim cyan bags contain 2 faded tan bags, 4 mirrored gold bags.
 faded cyan bags contain 1 dotted black bag, 1 shiny maroon bag, 2 muted chartreuse bags."""
 
-val input8 = """acc -5
+  val input8 = """acc -5
 nop +333
 acc +45
 jmp +288
